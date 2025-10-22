@@ -26,55 +26,69 @@
             overflow-x: hidden;
             background-color: var(--bg-primary); /* Apply primary bg to body */
             color: var(--text-primary);
+            line-height: 1.6; /* Improve readability */
         }
-        /* Light Theme Variables (Beige Minimalist) */
+        /* Light Theme Variables (Beige Minimalist - Refined) */
         :root {
             --bg-primary: #fdfbf6; /* Light Beige */
             --bg-secondary: #fffefb; /* Warmer White */
             --text-primary: #3a2e20; /* Dark Brown */
-            --text-secondary: #7a6a53; /* Medium Brown */
-            --accent-primary: #8c6d46; /* Soft Brown */
+            --text-secondary: #857663; /* Softer Medium Brown */
+            --accent-primary: #a08c6d; /* Muted Soft Brown */
             --accent-secondary: #f3eee8; /* Lighter Beige */
             --border-color: #e0d8cc; /* Beige Border */
-            --border-dashed: #bfae9a; /* Darker Beige Border */
-            --shadow-color: rgba(140, 109, 70, 0.08); /* Soft Brown Shadow */
+            --border-dashed: #d1c6b8; /* Softer Dashed Border */
+            --shadow-color: rgba(140, 109, 70, 0.05); /* Very Subtle Shadow */
             --nav-bg: rgba(253, 251, 246, 0.85); /* Semi-transparent light beige */
             --button-text: #fdfbf6; /* Light text for buttons */
         }
-        /* Dark Theme Variables (AMOLED Black Minimalist) */
+        /* Dark Theme Variables (AMOLED Black Minimalist - Refined) */
         .dark {
             --bg-primary: #000000;
-            --bg-secondary: #111111;
+            --bg-secondary: #0a0a0a; /* Slightly lighter than pure black */
             --text-primary: #e0d8cc; /* Light Beige Text */
             --text-secondary: #a09383; /* Muted Beige Text */
-            --accent-primary: #fde68a; /* Pale Yellow Accent */
-            --accent-secondary: #222222; /* Darker Gray */
-            --border-color: #444444; /* Medium Gray Border */
-            --border-dashed: #666666; /* Lighter Gray Border */
-            --shadow-color: rgba(253, 230, 138, 0.1); /* Pale Yellow Shadow */
-            --nav-bg: rgba(17, 17, 17, 0.85); /* Semi-transparent dark gray */
-            --button-text: #111111; /* Dark text for dark mode buttons */
+            --accent-primary: #e0d8cc; /* Use Light Beige as primary accent */
+            --accent-secondary: #1a1a1a; /* Darker Gray */
+            --border-color: #333333; /* Darker Gray Border */
+            --border-dashed: #555555; /* Medium Gray Border */
+            --shadow-color: rgba(224, 216, 204, 0.05); /* Very Subtle Light Shadow */
+            --nav-bg: rgba(10, 10, 10, 0.85); /* Semi-transparent darker gray */
+            --button-text: #0a0a0a; /* Dark text for dark mode buttons */
         }
 
-        /* General page layout */
+        /* General page layout - Full Width */
         .page-container {
              min-height: 100vh;
-             display: flex;
-             align-items: center;
-             justify-content: center;
-             padding: 4.5rem 1rem 1rem 1rem; /* Adjusted top padding for navbar */
+             /* Removed flex centering */
+             padding: 5rem 1rem 1rem 1rem; /* Top padding for navbar, side padding */
+             /* Add media query for larger screen padding */
+             @media (min-width: 768px) {
+                 padding-left: 2rem;
+                 padding-right: 2rem;
+             }
+             @media (min-width: 1024px) {
+                 padding-left: 4rem;
+                 padding-right: 4rem;
+             }
         }
          .content-wrapper {
              width: 100%;
-             max-width: 36rem;
+             /* Removed max-width */
+             margin: 0 auto; /* Center content if screen is huge, but allow full width */
          }
 
         .content-section {
             background-color: var(--bg-secondary);
-            border-radius: 0.5rem;
-            padding: 2rem;
+            border-radius: 0.375rem; /* Less rounded */
+            padding: 1.5rem; /* Adjusted padding */
             border: 1px solid var(--border-color);
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem; /* More spacing */
+            box-shadow: 0 1px 3px 0 var(--shadow-color); /* More subtle shadow */
+             /* Add responsive padding */
+             @media (min-width: 640px) {
+                 padding: 2.5rem;
+             }
         }
          .dark .content-section {
              background-color: var(--bg-secondary);
@@ -84,77 +98,107 @@
             margin-bottom: 0;
          }
 
-        /* Navbar Styles */
+        /* Navbar Styles - Full Width */
         nav {
-            position: fixed;
-            top: 0; left: 0; right: 0; z-index: 50;
-            background-color: var(--nav-bg);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            padding: 0.75rem 1rem;
-            border-bottom: 1px solid var(--border-color);
+            position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+            background-color: var(--nav-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            padding: 0.75rem 1rem; /* Side padding */
+             /* Add media query for larger screen padding */
+             @media (min-width: 768px) {
+                 padding-left: 2rem;
+                 padding-right: 2rem;
+             }
+              @media (min-width: 1024px) {
+                 padding-left: 4rem;
+                 padding-right: 4rem;
+             }
             transition: background-color 0.3s ease, border-color 0.3s ease;
         }
         .navbar-content {
-            max-width: 36rem; margin: 0 auto; display: flex;
-            justify-content: space-between; align-items: center;
+            /* Removed max-width */
+             margin: 0 auto;
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
         }
-        .navbar-title {
-             font-size: 1.2rem; /* Slightly larger */
-             font-weight: 600; color: var(--text-primary); white-space: nowrap;
+        .navbar-title { font-size: 1.1rem; font-weight: 600; color: var(--text-primary); white-space: nowrap; }
+
+        #howItWorksGrid {
+            position: relative;
+            /* Responsive Grid Columns */
+            grid-template-columns: repeat(1, minmax(0, 1fr)); /* Default: 1 column */
+             @media (min-width: 640px) {
+                 grid-template-columns: repeat(2, minmax(0, 1fr)); /* sm: 2 columns */
+             }
+              @media (min-width: 1024px) {
+                 grid-template-columns: repeat(3, minmax(0, 1fr)); /* lg: 3 columns */
+             }
         }
 
-        #howItWorksGrid { position: relative; }
 
         .file-upload-wrapper {
-            border: 2px dashed var(--border-dashed); background-color: transparent; color: var(--text-secondary);
+            border: 1px dashed var(--border-dashed); /* Thinner dash */
+            background-color: transparent; color: var(--text-secondary);
             transition: background-color 0.3s ease, border-color 0.3s ease;
-            cursor: pointer; padding: 2rem; text-align: center; border-radius: 0.5rem;
+            cursor: pointer; padding: 2.5rem; /* More padding */
+            text-align: center; border-radius: 0.375rem; /* Less rounded */
         }
         .file-upload-wrapper:hover { border-color: var(--accent-primary); background-color: var(--accent-secondary); color: var(--text-primary); }
          .dark .file-upload-wrapper:hover { background-color: var(--bg-secondary); }
         input[type="file"] { display: none; }
+        .file-upload-text { font-size: 0.9rem; /* Slightly larger */ }
 
         button {
-            background-color: var(--accent-primary);
-            color: var(--button-text); /* Use variable for button text */
+            background-color: var(--accent-primary); color: var(--button-text);
             transition: background-color 0.3s ease, transform 0.1s ease, color 0.3s ease;
-            padding: 0.75rem 1.5rem; border-radius: 0.375rem; font-weight: 500; display: inline-flex;
+            padding: 0.6rem 1.2rem; /* Slightly smaller */
+            border-radius: 0.25rem; /* Even less rounded */
+            font-weight: 500; display: inline-flex;
             align-items: center; justify-content: center;
+            border: 1px solid transparent; /* Prepare for dark mode border */
         }
         /* Make home page button visible in dark mode */
         .dark #goToPredictorBtn {
-            background-color: var(--accent-primary); /* Pale Yellow */
-            color: var(--bg-secondary); /* Dark Background */
+            background-color: transparent; /* Transparent background */
+            color: var(--accent-primary); /* Use accent text color */
+            border: 1px solid var(--accent-primary); /* Accent border */
         }
         .dark #goToPredictorBtn:hover {
-            filter: brightness(115%);
+             background-color: var(--accent-secondary); /* Darker gray on hover */
+             filter: none; /* Remove brightness filter */
         }
+         /* Predict button dark mode */
+        .dark #predictButton {
+             background-color: var(--accent-primary);
+             color: var(--button-text);
+             border: 1px solid transparent;
+        }
+         .dark #predictButton:hover {
+              filter: brightness(115%);
+         }
+
 
          /* Specific button for header */
-         #themeToggle, #backToHomeBtn { background-color: transparent; padding: 0.5rem; }
+         #themeToggle, #backToHomeBtn { background-color: transparent; padding: 0.5rem; border: none; }
          #backToHomeBtn { color: var(--text-secondary); font-size: 0.875rem; }
          #backToHomeBtn:hover { background-color: var(--accent-secondary); color: var(--accent-primary); }
 
-         .dark button { /* Default dark mode button uses accent as bg */
-             background-color: var(--accent-primary);
-             color: var(--button-text); /* Use variable */
-         }
          .dark #themeToggle, .dark #backToHomeBtn { color: var(--text-secondary); background-color: transparent; }
          .dark #themeToggle:hover, .dark #backToHomeBtn:hover { background-color: var(--accent-secondary); color: var(--accent-primary); }
 
         button:hover { filter: brightness(115%); }
-         .dark button:hover:not(#themeToggle):not(#backToHomeBtn) { filter: brightness(115%); } /* Adjusted dark hover */
         button:active { transform: translateY(1px); }
         button:disabled {
             filter: grayscale(80%); opacity: 0.4; cursor: not-allowed;
             background-color: var(--accent-secondary) !important; color: var(--text-secondary) !important;
+            border-color: var(--border-color) !important; /* Ensure disabled border */
         }
-         .dark button:disabled { background-color: var(--accent-secondary) !important; color: var(--text-secondary) !important; }
+         .dark button:disabled { background-color: var(--accent-secondary) !important; color: var(--text-secondary) !important; border-color: var(--border-color) !important; }
 
         #result span {
             display: inline-block; background-color: var(--accent-secondary); color: var(--accent-primary);
-            border: 1px solid var(--border-color); padding: 0.5rem 1.5rem; border-radius: 0.375rem;
+            border: 1px solid var(--border-color); padding: 0.5rem 1.5rem;
+            border-radius: 0.25rem; /* Less rounded */
             font-weight: 600; font-size: 1.25rem;
         }
          .dark #result span { background-color: var(--accent-secondary); border: 1px solid var(--border-color); color: var(--text-primary); }
@@ -167,28 +211,24 @@
         .info { background-color: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb;}
         .dark .info { background-color: #1a2f33; color: #d1ecf1; border-color: #0c5460;}
 
-        .loader {
-            width: 16px; height: 16px; border: 2px solid currentColor; border-bottom-color: transparent;
-            border-radius: 50%; display: inline-block; box-sizing: border-box;
-            animation: rotation 1s linear infinite; margin-left: 8px;
-        }
+        .loader { width: 14px; height: 14px; /* Smaller loader */ border: 2px solid currentColor; border-bottom-color: transparent; border-radius: 50%; display: inline-block; box-sizing: border-box; animation: rotation 1s linear infinite; margin-left: 8px; }
         @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         /* Smooth theme transition */
         html, body, nav, .content-section, .about-card, input, button, #result span, .file-upload-wrapper, label, h1, h2, h3, p, a, svg, summary, span {
             transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, fill 0.3s ease, box-shadow 0.3s ease;
         }
-        .about-section h2 { font-size: 1.5rem; /* Larger heading */ margin-bottom: 1.5rem; color: var(--text-primary); text-align: center; }
+        .about-section h2 { font-size: 1.4rem; font-weight: 600; /* Slightly bolder */ margin-bottom: 1.5rem; color: var(--text-primary); text-align: center; }
         .about-card {
-            background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 0.5rem;
-            padding: 1rem 1.5rem; box-shadow: 0 4px 6px -1px var(--shadow-color); cursor: grab;
+            background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 0.375rem; /* Less rounded */
+            padding: 1.25rem; /* More padding */ box-shadow: 0 1px 3px 0 var(--shadow-color); cursor: grab;
             user-select: none; position: relative; transition: transform 0.2s ease, box-shadow 0.2s ease; left: auto; top: auto;
         }
         .dark .about-card { background-color: var(--bg-secondary); }
-        .about-card:hover { transform: translateY(-2px); box-shadow: 0 8px 12px -2px var(--shadow-color); }
-        .about-card h3 { font-size: 1rem; font-weight: 600; color: var(--accent-primary); margin-bottom: 0.5rem; }
-         .dark .about-card h3 { color: var(--accent-primary); }
-        .about-card p { color: var(--text-secondary); font-size: 0.9rem; /* Slightly larger text */ line-height: 1.5; }
+        .about-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px -1px var(--shadow-color); }
+        .about-card h3 { font-size: 1rem; font-weight: 600; color: var(--text-primary); /* Primary text for title */ margin-bottom: 0.5rem; }
+         .dark .about-card h3 { color: var(--text-primary); }
+        .about-card p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5; }
         .about-card code {
             background-color: var(--accent-secondary); padding: 0.1rem 0.3rem; border-radius: 0.25rem;
             font-size: 0.8em; color: var(--accent-primary); font-family: monospace; /* Monospace for code */
@@ -197,30 +237,37 @@
 
         .dragging {
             position: absolute; cursor: grabbing; opacity: 0.85; z-index: 1000;
-            box-shadow: 0 10px 20px -3px rgba(0,0,0,0.2); transition: none; transform: scale(1.02);
+            box-shadow: 0 8px 16px -2px rgba(0,0,0,0.15); /* More subtle shadow when dragging */
+             transition: none; transform: scale(1.01);
         }
-        .dragging:hover { transform: scale(1.02); box-shadow: 0 10px 20px -3px rgba(0,0,0,0.2); }
-        .dark .dragging, .dark .dragging:hover { box-shadow: 0 10px 20px -3px rgba(255,255,255,0.2); }
+        .dragging:hover { transform: scale(1.01); box-shadow: 0 8px 16px -2px rgba(0,0,0,0.15); }
+        .dark .dragging, .dark .dragging:hover { box-shadow: 0 8px 16px -2px rgba(224, 216, 204, 0.1); }
 
         .github-button svg { fill: currentColor; }
         .header-icon { color: var(--text-secondary); }
         .header-icon:hover { color: var(--accent-primary); }
 
         /* Home Page specific styles */
-        #homePage { text-align: center; }
-        #homePage h1.title { font-size: 3rem; /* Larger title */ font-weight: 700; margin-bottom: 1.5rem; }
-        #homePage h1.emoji { font-size: 3.5rem; margin-bottom: 0.5rem; }
-        #homePage p { font-size: 1.1rem; /* Larger para */ margin-bottom: 2.5rem; color: var(--text-secondary); max-width: 90%; margin-left: auto; margin-right: auto; }
-        #goToPredictorBtn { font-size: 1.1rem; /* Larger button */ }
+        #homePage { text-align: center; max-width: 48rem; margin: 0 auto; /* Center home content slightly */ }
+        #homePage h1.title { font-size: 2.8rem; font-weight: 600; margin-bottom: 1.5rem; }
+        #homePage h1.emoji { font-size: 3rem; margin-bottom: 0.5rem; }
+        #homePage p { font-size: 1.05rem; margin-bottom: 2.5rem; color: var(--text-secondary); max-width: 90%; margin-left: auto; margin-right: auto; }
+        #goToPredictorBtn { font-size: 1rem; }
 
         /* Footer */
-        footer { text-align: center; font-size: 0.8rem; /* Slightly larger footer */ color: var(--text-secondary); padding-top: 2rem; padding-bottom: 1rem; }
+        footer { text-align: center; font-size: 0.8rem; color: var(--text-secondary); padding-top: 2rem; padding-bottom: 1rem; width: 100%; /* Ensure footer spans width */ }
         footer a { color: var(--text-secondary); }
         footer a:hover { color: var(--accent-primary); }
 
         /* Hide/Show Views */
         .view { display: none; }
         .view.active { display: block; }
+
+        /* Ensure grid has some min height when empty or loading */
+         #howItWorksGrid {
+             min-height: 200px;
+         }
+
     </style>
 </head>
 <body class="bg-[--bg-primary] text-[--text-primary]">
@@ -267,23 +314,20 @@
             </div>
 
             <!-- Predictor Page View -->
-            <div id="predictorPage" class="view space-y-6"> <!-- Start hidden -->
+            <div id="predictorPage" class="view space-y-8"> <!-- Increased overall spacing -->
 
                 <!-- Prediction Section -->
-                <div class="content-section space-y-4">
-                     <p class="text-[--text-secondary] text-sm">
-                         Upload a fingerprint image to predict the blood group using the AI model running in your browser.
-                     </p>
+                <div class="content-section space-y-5"> <!-- Increased internal spacing -->
                      <div>
-                         <label for="imageFile" class="text-sm font-medium text-[--text-primary] mb-2 block">Fingerprint Image:</label>
+                         <label for="imageFile" class="text-sm font-medium text-[--text-secondary] mb-2 block">Upload Fingerprint Image:</label>
                          <label for="imageFile" class="file-upload-wrapper block rounded-md p-4 text-center">
                              <span class="file-upload-text block text-xs font-medium" id="fileUploadText">
-                                 Click or drag image here
+                                 Click or drag image
                              </span>
                              <input type="file" id="imageFile" accept="image/*" required>
                          </label>
                      </div>
-                     <img id="imagePreview" src="#" alt="Preview" class="w-24 h-24 object-cover mx-auto rounded-md border border-[--border-color] bg-[--bg-primary] hidden mt-3"/>
+                     <img id="imagePreview" src="#" alt="Preview" class="w-20 h-20 /* Smaller preview */ object-cover mx-auto rounded-md border border-[--border-color] bg-[--bg-primary] hidden mt-3"/>
                      <button id="predictButton" disabled class="w-full justify-center mt-4 py-2">
                          Predict
                          <span id="loader" class="loader hidden"></span>
@@ -294,39 +338,39 @@
 
                 <!-- How It Works Section (Draggable Cards) -->
                 <div class="content-section about-section">
-                    <h2 class="text-xl font-semibold text-[--text-primary] mb-4">How It Works (Drag Cards)</h2>
-                    <div id="howItWorksGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <h2 class="text-lg font-semibold text-[--text-primary] mb-5">How It Works (Drag Cards)</h2>
+                    <div id="howItWorksGrid" class="grid gap-4"> <!-- Responsive columns handled in style -->
                         <!-- Cards -->
                         <div class="about-card draggable" id="card-1">
-                            <h3>1. Data Source</h3>
-                            <p>Trained on Kaggle's "Finger Print Based Blood Group Dataset" with labels like <code>A+</code>, <code>B-</code>, etc.</p>
+                            <h3>1. Data</h3>
+                            <p>Trained on Kaggle's Fingerprint/Blood Group dataset (<code>A+</code>, <code>B-</code>...).</p>
                         </div>
                          <div class="about-card draggable" id="card-2">
-                            <h3>2. Model Creation</h3>
-                            <p>A CNN built with TensorFlow/Keras (<code>Conv2D</code>, <code>MaxPool</code>, <code>Dropout</code>, <code>Dense</code>).</p>
+                            <h3>2. Model</h3>
+                            <p>CNN via TensorFlow/Keras (<code>Conv2D</code>, <code>MaxPool</code>, <code>Dropout</code>, <code>Dense</code>).</p>
                          </div>
                          <div class="about-card draggable" id="card-3">
-                            <h3>3. Image Handling</h3>
-                            <p>Images resized to <code>64x64px</code> and pixel values normalized (0-1 range).</p>
+                            <h3>3. Images</h3>
+                            <p>Resized to <code>64x64px</code> & normalized (0-1).</p>
                          </div>
                          <div class="about-card draggable" id="card-4">
                             <h3>4. Training</h3>
-                            <p>Learned using Adam optimizer and crossentropy loss. Best model saved (<code>.h5</code>).</p>
+                            <p>Used Adam optimizer & crossentropy loss (<code>.h5</code> saved).</p>
                          </div>
                          <div class="about-card draggable" id="card-5">
-                            <h3>5. Browser Conversion</h3>
-                            <p><code>.h5</code> converted to TensorFlow.js format (<code>model.json</code> + <code>.bin</code>) via converter tool.</p>
+                            <h3>5. Conversion</h3>
+                            <p><code>.h5</code> model converted to TensorFlow.js format.</p>
                          </div>
                          <div class="about-card draggable" id="card-6">
-                            <h3>6. Web Interface</h3>
-                            <p>HTML, Tailwind CSS, JS. TensorFlow.js runs prediction locally in your browser.</p>
+                            <h3>6. Interface</h3>
+                            <p>HTML/CSS/JS with TensorFlow.js for in-browser prediction.</p>
                          </div>
                     </div>
                 </div>
             </div> <!-- End Predictor Page View -->
 
              <!-- Footer (Now outside specific views but inside wrapper) -->
-             <footer>
+             <footer class="w-full"> <!-- Ensure footer spans width -->
                 <p>Created by [Your Name Here]</p> <!-- Placeholder -->
                 <a href="[Your GitHub Repo Link Here]" target="_blank" rel="noopener noreferrer" class="github-button inline-flex items-center space-x-1 mt-1">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
@@ -448,7 +492,7 @@
             } else {
                 imagePreview.style.display = 'none';
                 imagePreview.src = '#';
-                fileUploadText.textContent = 'Click or drag image here';
+                fileUploadText.textContent = 'Click or drag image'; // Simplified text
                  showMessage('Please select an image file.', 'error');
             }
              checkEnableButton();
@@ -478,7 +522,7 @@
             setLoading(true, 'Loading AI model...');
             try {
                 model = await tf.loadLayersModel(modelPath);
-                showMessage('Model loaded! Upload an image.', 'success');
+                showMessage('Model loaded. Upload an image.', 'success');
                 checkEnableButton();
             } catch (error) {
                 console.error("Error loading model:", error);
