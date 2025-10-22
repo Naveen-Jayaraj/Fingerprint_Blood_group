@@ -19,75 +19,80 @@
         }
     </script>
     <style>
+        html, body {
+            height: 100%; /* Ensure html and body take full height */
+            margin: 0;
+            padding: 0;
+        }
         body {
-            /* Apply Cormorant Garamond font */
             font-family: 'Cormorant Garamond', serif;
             transition: background-color 0.3s ease, color 0.3s ease;
             overflow-x: hidden;
-            background-color: var(--bg-primary); /* Apply primary bg to body */
+            background-color: var(--bg-primary);
             color: var(--text-primary);
-            line-height: 1.6; /* Improve readability */
+            line-height: 1.7;
+            font-size: 1.1rem;
         }
-        /* Light Theme Variables (Beige Minimalist - Refined) */
+        /* Light Theme Variables */
         :root {
-            --bg-primary: #fdfbf6; /* Light Beige */
-            --bg-secondary: #fffefb; /* Warmer White */
-            --text-primary: #3a2e20; /* Dark Brown */
-            --text-secondary: #857663; /* Softer Medium Brown */
-            --accent-primary: #a08c6d; /* Muted Soft Brown */
-            --accent-secondary: #f3eee8; /* Lighter Beige */
-            --border-color: #e0d8cc; /* Beige Border */
-            --border-dashed: #d1c6b8; /* Softer Dashed Border */
-            --shadow-color: rgba(140, 109, 70, 0.05); /* Very Subtle Shadow */
-            --nav-bg: rgba(253, 251, 246, 0.85); /* Semi-transparent light beige */
-            --button-text: #fdfbf6; /* Light text for buttons */
+            --bg-primary: #fdfbf6;
+            --bg-secondary: #fffefb;
+            --text-primary: #3a2e20;
+            --text-secondary: #857663;
+            --accent-primary: #a08c6d;
+            --accent-secondary: #f3eee8;
+            --border-color: #e0d8cc;
+            --border-dashed: #d1c6b8;
+            --shadow-color: rgba(140, 109, 70, 0.05);
+            --nav-bg: rgba(253, 251, 246, 0.85);
+            --button-text: #fdfbf6;
         }
-        /* Dark Theme Variables (AMOLED Black Minimalist - Refined) */
+        /* Dark Theme Variables */
         .dark {
             --bg-primary: #000000;
-            --bg-secondary: #0a0a0a; /* Slightly lighter than pure black */
-            --text-primary: #e0d8cc; /* Light Beige Text */
-            --text-secondary: #a09383; /* Muted Beige Text */
-            --accent-primary: #e0d8cc; /* Use Light Beige as primary accent */
-            --accent-secondary: #1a1a1a; /* Darker Gray */
-            --border-color: #333333; /* Darker Gray Border */
-            --border-dashed: #555555; /* Medium Gray Border */
-            --shadow-color: rgba(224, 216, 204, 0.05); /* Very Subtle Light Shadow */
-            --nav-bg: rgba(10, 10, 10, 0.85); /* Semi-transparent darker gray */
-            --button-text: #0a0a0a; /* Dark text for dark mode buttons */
+            --bg-secondary: #0a0a0a;
+            --text-primary: #e0d8cc;
+            --text-secondary: #a09383;
+            --accent-primary: #e0d8cc;
+            --accent-secondary: #1a1a1a;
+            --border-color: #333333;
+            --border-dashed: #555555;
+            --shadow-color: rgba(224, 216, 204, 0.05);
+            --nav-bg: rgba(10, 10, 10, 0.85);
+            --button-text: #0a0a0a;
         }
 
-        /* General page layout - Full Width */
+        /* General page layout - Adjusted for Full Screen */
         .page-container {
-             min-height: 100vh;
-             /* Removed flex centering */
-             padding: 5rem 1rem 1rem 1rem; /* Top padding for navbar, side padding */
-             /* Add media query for larger screen padding */
+             /* min-height removed, will rely on section heights */
+             padding: 5rem 1.5rem 1.5rem 1.5rem; /* Adjusted top padding for navbar */
+             box-sizing: border-box; /* Include padding in height calc */
+             width: 100%;
              @media (min-width: 768px) {
-                 padding-left: 2rem;
-                 padding-right: 2rem;
+                 padding-left: 3rem;
+                 padding-right: 3rem;
              }
              @media (min-width: 1024px) {
-                 padding-left: 4rem;
-                 padding-right: 4rem;
+                 padding-left: 5rem;
+                 padding-right: 5rem;
              }
         }
          .content-wrapper {
              width: 100%;
-             /* Removed max-width */
-             margin: 0 auto; /* Center content if screen is huge, but allow full width */
+             margin: 0 auto;
          }
 
         .content-section {
             background-color: var(--bg-secondary);
-            border-radius: 0.375rem; /* Less rounded */
-            padding: 1.5rem; /* Adjusted padding */
+            border-radius: 0.375rem;
+            padding: 2rem;
             border: 1px solid var(--border-color);
-            margin-bottom: 2rem; /* More spacing */
-            box-shadow: 0 1px 3px 0 var(--shadow-color); /* More subtle shadow */
-             /* Add responsive padding */
+            margin-bottom: 2.5rem;
+            box-shadow: 0 1px 3px 0 var(--shadow-color);
+             width: 100%; /* Ensure sections take full width */
+             box-sizing: border-box; /* Include padding in width */
              @media (min-width: 640px) {
-                 padding: 2.5rem;
+                 padding: 3rem;
              }
         }
          .dark .content-section {
@@ -98,112 +103,107 @@
             margin-bottom: 0;
          }
 
-        /* Navbar Styles - Full Width */
+        /* Full Height Section Styling - Adjusted Calculation */
+        .full-height-section {
+            /* Calculate height based on viewport minus fixed elements */
+            /* Navbar height is approx 3.5rem (padding + line height) */
+            min-height: calc(100vh - 5rem); /* Adjusted calculation */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-top: 2rem; /* Add some internal padding */
+            padding-bottom: 2rem;
+            box-sizing: border-box;
+            width: 100%; /* Ensure it takes full width */
+        }
+
+        /* Navbar Styles */
         nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 50;
             background-color: var(--nav-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-            padding: 0.75rem 1rem; /* Side padding */
-             /* Add media query for larger screen padding */
+            padding: 0.85rem 1.5rem; height: 5rem; /* Fixed height for calc() */
+             box-sizing: border-box;
              @media (min-width: 768px) {
-                 padding-left: 2rem;
-                 padding-right: 2rem;
+                 padding-left: 3rem;
+                 padding-right: 3rem;
              }
               @media (min-width: 1024px) {
-                 padding-left: 4rem;
-                 padding-right: 4rem;
+                 padding-left: 5rem;
+                 padding-right: 5rem;
              }
             transition: background-color 0.3s ease, border-color 0.3s ease;
         }
         .navbar-content {
-            /* Removed max-width */
-             margin: 0 auto;
-             display: flex;
-             justify-content: space-between;
-             align-items: center;
+             margin: 0 auto; display: flex; justify-content: space-between; align-items: center; height: 100%;
         }
-        .navbar-title { font-size: 1.1rem; font-weight: 600; color: var(--text-primary); white-space: nowrap; }
+        .navbar-title { font-size: 1.25rem; font-weight: 600; color: var(--text-primary); white-space: nowrap; }
 
         #howItWorksGrid {
             position: relative;
-            /* Responsive Grid Columns */
-            grid-template-columns: repeat(1, minmax(0, 1fr)); /* Default: 1 column */
+            grid-template-columns: repeat(1, minmax(0, 1fr));
              @media (min-width: 640px) {
-                 grid-template-columns: repeat(2, minmax(0, 1fr)); /* sm: 2 columns */
+                 grid-template-columns: repeat(2, minmax(0, 1fr));
              }
               @media (min-width: 1024px) {
-                 grid-template-columns: repeat(3, minmax(0, 1fr)); /* lg: 3 columns */
+                 grid-template-columns: repeat(3, minmax(0, 1fr));
              }
         }
 
 
         .file-upload-wrapper {
-            border: 1px dashed var(--border-dashed); /* Thinner dash */
-            background-color: transparent; color: var(--text-secondary);
+            border: 1px dashed var(--border-dashed); background-color: transparent; color: var(--text-secondary);
             transition: background-color 0.3s ease, border-color 0.3s ease;
-            cursor: pointer; padding: 2.5rem; /* More padding */
-            text-align: center; border-radius: 0.375rem; /* Less rounded */
+            cursor: pointer; padding: 3rem; text-align: center; border-radius: 0.375rem;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 90%; /* Make it responsive within its container */
         }
         .file-upload-wrapper:hover { border-color: var(--accent-primary); background-color: var(--accent-secondary); color: var(--text-primary); }
          .dark .file-upload-wrapper:hover { background-color: var(--bg-secondary); }
         input[type="file"] { display: none; }
-        .file-upload-text { font-size: 0.9rem; /* Slightly larger */ }
+        .file-upload-text { font-size: 1rem; }
 
         button {
             background-color: var(--accent-primary); color: var(--button-text);
             transition: background-color 0.3s ease, transform 0.1s ease, color 0.3s ease;
-            padding: 0.6rem 1.2rem; /* Slightly smaller */
-            border-radius: 0.25rem; /* Even less rounded */
+            padding: 0.75rem 1.5rem; border-radius: 0.25rem;
             font-weight: 500; display: inline-flex;
             align-items: center; justify-content: center;
-            border: 1px solid transparent; /* Prepare for dark mode border */
+            border: 1px solid transparent; font-size: 1.1rem;
         }
-        /* Make home page button visible in dark mode */
         .dark #goToPredictorBtn {
-            background-color: transparent; /* Transparent background */
-            color: var(--accent-primary); /* Use accent text color */
-            border: 1px solid var(--accent-primary); /* Accent border */
+            background-color: transparent; color: var(--accent-primary); border: 1px solid var(--accent-primary);
         }
-        .dark #goToPredictorBtn:hover {
-             background-color: var(--accent-secondary); /* Darker gray on hover */
-             filter: none; /* Remove brightness filter */
-        }
-         /* Predict button dark mode */
-        .dark #predictButton {
-             background-color: var(--accent-primary);
-             color: var(--button-text);
-             border: 1px solid transparent;
-        }
-         .dark #predictButton:hover {
-              filter: brightness(115%);
-         }
+        .dark #goToPredictorBtn:hover { background-color: var(--accent-secondary); filter: none; }
+        .dark #predictButton { background-color: var(--accent-primary); color: var(--button-text); border: 1px solid transparent; }
+        .dark #predictButton:hover { filter: brightness(115%); }
 
-
-         /* Specific button for header */
-         #themeToggle, #backToHomeBtn { background-color: transparent; padding: 0.5rem; border: none; }
-         #backToHomeBtn { color: var(--text-secondary); font-size: 0.875rem; }
-         #backToHomeBtn:hover { background-color: var(--accent-secondary); color: var(--accent-primary); }
-
-         .dark #themeToggle, .dark #backToHomeBtn { color: var(--text-secondary); background-color: transparent; }
-         .dark #themeToggle:hover, .dark #backToHomeBtn:hover { background-color: var(--accent-secondary); color: var(--accent-primary); }
+        #themeToggle, #backToHomeBtn { background-color: transparent; padding: 0.5rem; border: none; }
+        #backToHomeBtn { color: var(--text-secondary); font-size: 1rem; }
+        #backToHomeBtn:hover { background-color: var(--accent-secondary); color: var(--accent-primary); }
+        .dark #themeToggle, .dark #backToHomeBtn { color: var(--text-secondary); background-color: transparent; }
+        .dark #themeToggle:hover, .dark #backToHomeBtn:hover { background-color: var(--accent-secondary); color: var(--accent-primary); }
 
         button:hover { filter: brightness(115%); }
         button:active { transform: translateY(1px); }
         button:disabled {
             filter: grayscale(80%); opacity: 0.4; cursor: not-allowed;
             background-color: var(--accent-secondary) !important; color: var(--text-secondary) !important;
-            border-color: var(--border-color) !important; /* Ensure disabled border */
+            border-color: var(--border-color) !important;
         }
          .dark button:disabled { background-color: var(--accent-secondary) !important; color: var(--text-secondary) !important; border-color: var(--border-color) !important; }
 
         #result span {
             display: inline-block; background-color: var(--accent-secondary); color: var(--accent-primary);
-            border: 1px solid var(--border-color); padding: 0.5rem 1.5rem;
-            border-radius: 0.25rem; /* Less rounded */
-            font-weight: 600; font-size: 1.25rem;
+            border: 1px solid var(--border-color); padding: 0.6rem 1.8rem;
+            border-radius: 0.25rem; font-weight: 600; font-size: 1.4rem;
         }
          .dark #result span { background-color: var(--accent-secondary); border: 1px solid var(--border-color); color: var(--text-primary); }
 
-        #messageBox { font-size: 0.9rem; border-radius: 0.375rem; }
+        #messageBox { font-size: 1rem; border-radius: 0.375rem; max-width: 400px; margin: 1rem auto 0 auto; width: 90%; }
         .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;}
         .dark .error { background-color: #2c1a1d; color: #f8d7da; border-color: #721c24;}
         .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb;}
@@ -211,33 +211,42 @@
         .info { background-color: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb;}
         .dark .info { background-color: #1a2f33; color: #d1ecf1; border-color: #0c5460;}
 
-        .loader { width: 14px; height: 14px; /* Smaller loader */ border: 2px solid currentColor; border-bottom-color: transparent; border-radius: 50%; display: inline-block; box-sizing: border-box; animation: rotation 1s linear infinite; margin-left: 8px; }
+        .loader { width: 16px; height: 16px; border: 2px solid currentColor; border-bottom-color: transparent; border-radius: 50%; display: inline-block; box-sizing: border-box; animation: rotation 1s linear infinite; margin-left: 10px; }
         @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         /* Smooth theme transition */
         html, body, nav, .content-section, .about-card, input, button, #result span, .file-upload-wrapper, label, h1, h2, h3, p, a, svg, summary, span {
             transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, fill 0.3s ease, box-shadow 0.3s ease;
         }
-        .about-section h2 { font-size: 1.4rem; font-weight: 600; /* Slightly bolder */ margin-bottom: 1.5rem; color: var(--text-primary); text-align: center; }
+        .about-section {
+             /* Remove fixed margin-bottom from .content-section */
+             margin-bottom: 0 !important;
+             /* Add padding to the top to separate from prediction section */
+             padding-top: 4rem;
+             /* Add padding to the bottom before the footer */
+             padding-bottom: 4rem;
+        }
+
+        .about-section h2 { font-size: 1.6rem; font-weight: 600; margin-bottom: 2rem; color: var(--text-primary); text-align: center; }
         .about-card {
-            background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 0.375rem; /* Less rounded */
-            padding: 1.25rem; /* More padding */ box-shadow: 0 1px 3px 0 var(--shadow-color); cursor: grab;
+            background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 0.375rem;
+            padding: 1.5rem; box-shadow: 0 1px 3px 0 var(--shadow-color); cursor: grab;
             user-select: none; position: relative; transition: transform 0.2s ease, box-shadow 0.2s ease; left: auto; top: auto;
         }
         .dark .about-card { background-color: var(--bg-secondary); }
         .about-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px -1px var(--shadow-color); }
-        .about-card h3 { font-size: 1rem; font-weight: 600; color: var(--text-primary); /* Primary text for title */ margin-bottom: 0.5rem; }
+        .about-card h3 { font-size: 1.15rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.6rem; }
          .dark .about-card h3 { color: var(--text-primary); }
-        .about-card p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5; }
+        .about-card p { color: var(--text-secondary); font-size: 1rem; line-height: 1.6; }
         .about-card code {
             background-color: var(--accent-secondary); padding: 0.1rem 0.3rem; border-radius: 0.25rem;
-            font-size: 0.8em; color: var(--accent-primary); font-family: monospace; /* Monospace for code */
+            font-size: 0.85em; color: var(--accent-primary); font-family: monospace;
         }
         .dark .about-card code { color: var(--text-primary); background-color: var(--accent-secondary); }
 
         .dragging {
             position: absolute; cursor: grabbing; opacity: 0.85; z-index: 1000;
-            box-shadow: 0 8px 16px -2px rgba(0,0,0,0.15); /* More subtle shadow when dragging */
+            box-shadow: 0 8px 16px -2px rgba(0,0,0,0.15);
              transition: none; transform: scale(1.01);
         }
         .dragging:hover { transform: scale(1.01); box-shadow: 0 8px 16px -2px rgba(0,0,0,0.15); }
@@ -248,14 +257,27 @@
         .header-icon:hover { color: var(--accent-primary); }
 
         /* Home Page specific styles */
-        #homePage { text-align: center; max-width: 48rem; margin: 0 auto; /* Center home content slightly */ }
-        #homePage h1.title { font-size: 2.8rem; font-weight: 600; margin-bottom: 1.5rem; }
-        #homePage h1.emoji { font-size: 3rem; margin-bottom: 0.5rem; }
-        #homePage p { font-size: 1.05rem; margin-bottom: 2.5rem; color: var(--text-secondary); max-width: 90%; margin-left: auto; margin-right: auto; }
-        #goToPredictorBtn { font-size: 1rem; }
+        #homePage { text-align: center; max-width: 52rem; margin: 0 auto; /* Keep home content centered */ }
+        #homePage h1.title { font-size: 3.2rem; font-weight: 600; margin-bottom: 2rem; }
+        #homePage h1.emoji { font-size: 3.5rem; margin-bottom: 0.75rem; }
+        #homePage p { font-size: 1.2rem; margin-bottom: 3rem; color: var(--text-secondary); max-width: 90%; margin-left: auto; margin-right: auto; }
+        #goToPredictorBtn { font-size: 1.1rem; padding: 0.85rem 1.8rem; }
 
         /* Footer */
-        footer { text-align: center; font-size: 0.8rem; color: var(--text-secondary); padding-top: 2rem; padding-bottom: 1rem; width: 100%; /* Ensure footer spans width */ }
+        footer {
+            text-align: center; font-size: 0.9rem; color: var(--text-secondary);
+            padding: 3rem 1.5rem 1.5rem 1.5rem; /* Adjusted padding */
+            width: 100%; box-sizing: border-box;
+            background-color: var(--bg-primary); /* Ensure footer matches page background */
+             @media (min-width: 768px) {
+                 padding-left: 3rem;
+                 padding-right: 3rem;
+             }
+              @media (min-width: 1024px) {
+                 padding-left: 5rem;
+                 padding-right: 5rem;
+             }
+        }
         footer a { color: var(--text-secondary); }
         footer a:hover { color: var(--accent-primary); }
 
@@ -263,10 +285,18 @@
         .view { display: none; }
         .view.active { display: block; }
 
-        /* Ensure grid has some min height when empty or loading */
-         #howItWorksGrid {
-             min-height: 200px;
-         }
+        #howItWorksGrid { min-height: 200px; }
+
+         /* Prediction section specific content centering */
+        #predictionSection > div { /* Target the inner div */
+            width: 100%;
+            max-width: 40rem; /* Limit width of content inside */
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1rem; /* Add some padding for smaller screens */
+            padding-right: 1rem;
+        }
+
 
     </style>
 </head>
@@ -276,19 +306,18 @@
     <nav>
         <div class="navbar-content">
              <div id="navLeft" class="flex items-center">
-                 <!-- Back button - hidden on home page -->
-                <button id="backToHomeBtn" class="p-2 rounded-md hover:bg-[--accent-secondary] text-sm text-[--text-secondary] hover:text-[--accent-primary] mr-2 hidden">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <button id="backToHomeBtn" class="p-2 rounded-md hover:bg-[--accent-secondary] text-sm text-[--text-secondary] hover:text-[--accent-primary] mr-3 hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
                 </button>
                 <span class="navbar-title">Fingerprint AI 🩸</span>
              </div>
              <button id="themeToggle" aria-label="Toggle dark mode" class="p-2 rounded-md hover:bg-[--accent-secondary]">
-                 <svg id="sunIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 header-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                 <svg id="sunIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 header-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M12 18a6 6 0 100-12 6 6 0 000 12z" />
                  </svg>
-                  <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 header-icon hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 header-icon hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                   </svg>
              </button>
@@ -299,48 +328,49 @@
         <div class="content-wrapper">
 
             <!-- Home Page View -->
-            <div id="homePage" class="view active content-section"> <!-- Start visible -->
-                 <h1 class="emoji text-[--text-primary]">🩸</h1>
-                 <h1 class="title text-[--text-primary]">Fingerprint Blood Group AI</h1>
-                 <p>
-                     Discover the potential link between fingerprints and blood types. Upload a fingerprint image and let our AI model predict the corresponding blood group, all securely within your browser.
-                 </p>
-                 <button id="goToPredictorBtn">
-                     Try the Predictor
-                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                       <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                     </svg>
-                 </button>
+            <div id="homePage" class="view active content-section full-height-section">
+                 <div>
+                     <h1 class="emoji text-[--text-primary]">🩸</h1>
+                     <h1 class="title text-[--text-primary]">Fingerprint Blood Group AI</h1>
+                     <p>
+                         Discover the potential link between fingerprints and blood types. Upload a fingerprint image and let our AI model predict the corresponding blood group, all securely within your browser.
+                     </p>
+                     <button id="goToPredictorBtn">
+                         Try the Predictor
+                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                           <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                         </svg>
+                     </button>
+                 </div>
             </div>
 
             <!-- Predictor Page View -->
-            <div id="predictorPage" class="view space-y-8"> <!-- Increased overall spacing -->
+            <div id="predictorPage" class="view"> <!-- Removed space-y -->
 
-                <!-- Prediction Section -->
-                <div class="content-section space-y-5"> <!-- Increased internal spacing -->
-                     <div>
-                         <label for="imageFile" class="text-sm font-medium text-[--text-secondary] mb-2 block">Upload Fingerprint Image:</label>
-                         <label for="imageFile" class="file-upload-wrapper block rounded-md p-4 text-center">
-                             <span class="file-upload-text block text-xs font-medium" id="fileUploadText">
+                <!-- Prediction Section - Full height -->
+                <div id="predictionSection" class="content-section full-height-section space-y-6">
+                    <div>
+                        <label for="imageFile" class="text-base font-medium text-[--text-secondary] mb-3 block">Upload Fingerprint Image:</label>
+                        <label for="imageFile" class="file-upload-wrapper block rounded-md p-6 text-center">
+                             <span class="file-upload-text block text-sm font-medium" id="fileUploadText">
                                  Click or drag image
                              </span>
                              <input type="file" id="imageFile" accept="image/*" required>
                          </label>
-                     </div>
-                     <img id="imagePreview" src="#" alt="Preview" class="w-20 h-20 /* Smaller preview */ object-cover mx-auto rounded-md border border-[--border-color] bg-[--bg-primary] hidden mt-3"/>
-                     <button id="predictButton" disabled class="w-full justify-center mt-4 py-2">
-                         Predict
-                         <span id="loader" class="loader hidden"></span>
-                     </button>
-                     <div id="messageBox" class="hidden mt-4 p-2.5 rounded-md text-sm"></div>
-                     <div id="result" class="mt-5 text-center text-lg font-medium text-[--text-primary]"></div>
+                        <img id="imagePreview" src="#" alt="Preview" class="w-24 h-24 object-cover mx-auto rounded-md border border-[--border-color] bg-[--bg-primary] hidden mt-4"/>
+                        <button id="predictButton" disabled class="w-full max-w-xs mx-auto justify-center mt-5 py-3 text-lg">
+                             Predict
+                             <span id="loader" class="loader hidden"></span>
+                        </button>
+                        <div id="messageBox" class="hidden mt-5 p-3 rounded-md text-base"></div>
+                        <div id="result" class="mt-6 text-center text-xl font-medium text-[--text-primary]"></div>
+                    </div>
                 </div>
 
-                <!-- How It Works Section (Draggable Cards) -->
-                <div class="content-section about-section">
-                    <h2 class="text-lg font-semibold text-[--text-primary] mb-5">How It Works (Drag Cards)</h2>
-                    <div id="howItWorksGrid" class="grid gap-4"> <!-- Responsive columns handled in style -->
-                        <!-- Cards -->
+                <!-- How It Works Section - Regular flow -->
+                <div id="aboutSection" class="content-section about-section">
+                    <h2 class="text-xl font-semibold text-[--text-primary] mb-6">How It Works (Drag Cards)</h2>
+                    <div id="howItWorksGrid" class="grid gap-5">
                         <div class="about-card draggable" id="card-1">
                             <h3>1. Data</h3>
                             <p>Trained on Kaggle's Fingerprint/Blood Group dataset (<code>A+</code>, <code>B-</code>...).</p>
@@ -369,16 +399,16 @@
                 </div>
             </div> <!-- End Predictor Page View -->
 
-             <!-- Footer (Now outside specific views but inside wrapper) -->
-             <footer class="w-full"> <!-- Ensure footer spans width -->
-                <p>Created by [Your Name Here]</p> <!-- Placeholder -->
+             <!-- Footer -->
+             <footer class="w-full">
+                <p>Created by [Your Name Here]</p>
                 <a href="[Your GitHub Repo Link Here]" target="_blank" rel="noopener noreferrer" class="github-button inline-flex items-center space-x-1 mt-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
                         <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
                     </svg>
                     <span>View on GitHub</span>
                  </a>
-                 <p class="mt-1">Contact: [Your Contact Info/Link Here]</p> <!-- Placeholder -->
+                 <p class="mt-1">Contact: [Your Contact Info/Link Here]</p>
              </footer>
 
         </div> <!-- End Content Wrapper -->
@@ -412,8 +442,8 @@
         // --- State ---
         let model = null;
         let imageFile = null;
-        let modelLoaded = false; // Flag to load model only once
-        const modelPath = './tfjs_model/model.json'; // Relative path to the model JSON
+        let modelLoaded = false;
+        const modelPath = './tfjs_model/model.json';
         const CLASS_NAMES = ['A+', 'A-', 'AB+', 'AB-', 'B+', 'B-', 'O+', 'O-'];
         const IMG_SIZE = 64;
 
@@ -435,19 +465,19 @@
             if (viewToShow) {
                 viewToShow.classList.add('active');
             }
-
-            // Show/Hide Back button based on view
             if (viewId === 'predictorPage') {
                 backToHomeBtn.classList.remove('hidden');
+                 document.body.style.overflowY = 'auto'; // Ensure scroll
+                 window.scrollTo(0, 0); // Scroll to top
             } else {
                 backToHomeBtn.classList.add('hidden');
+                // Keep scroll enabled for home page too if content exceeds viewport
+                document.body.style.overflowY = 'auto';
             }
-
-            // Load model and init cards only when showing predictor page for the first time
             if (viewId === 'predictorPage' && !modelLoaded) {
                  loadModel();
                  initializeDraggableCards();
-                 modelLoaded = true; // Set flag
+                 modelLoaded = true;
             }
         }
 
@@ -471,7 +501,6 @@
             localStorage.theme = isDarkMode ? 'dark' : 'light';
             applyTheme(isDarkMode);
         });
-        // Apply theme initially
         applyTheme(localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches));
 
 
@@ -492,30 +521,21 @@
             } else {
                 imagePreview.style.display = 'none';
                 imagePreview.src = '#';
-                fileUploadText.textContent = 'Click or drag image'; // Simplified text
+                fileUploadText.textContent = 'Click or drag image';
                  showMessage('Please select an image file.', 'error');
             }
              checkEnableButton();
         }
         function checkEnableButton() {
-            // Check if predict button exists before trying to access disabled property
             if (predictButton) {
                 predictButton.disabled = !(model && imageFile);
-                if (!(model && imageFile) && resultDiv) { // Check if resultDiv exists
+                if (!(model && imageFile) && resultDiv) {
                     resultDiv.textContent = '';
                 }
             }
         }
-
-         // Add event listener only if imageFileInput exists
-         if (imageFileInput) {
-             imageFileInput.addEventListener('change', handleImageFile);
-         }
-         // Add event listener only if predictButton exists
-         if (predictButton) {
-             predictButton.addEventListener('click', predict);
-         }
-
+        if (imageFileInput) { imageFileInput.addEventListener('change', handleImageFile); }
+        if (predictButton) { predictButton.addEventListener('click', predict); }
 
         // --- TensorFlow.js Logic ---
         async function loadModel() {
@@ -527,7 +547,7 @@
             } catch (error) {
                 console.error("Error loading model:", error);
                 showMessage(`Model load error. Check console.`, 'error');
-                model = null; // Ensure model is null on error
+                model = null;
                 checkEnableButton();
             } finally {
                 setLoading(false);
@@ -563,7 +583,7 @@
                 return;
             }
             setLoading(true, 'Analyzing...');
-            if (resultDiv) resultDiv.innerHTML = ''; // Check if resultDiv exists
+            if (resultDiv) resultDiv.innerHTML = '';
             let tensor;
             try {
                 tensor = await preprocessImage(imageFile);
@@ -582,12 +602,10 @@
             }
         }
 
-
         // --- UI Helpers ---
         function setLoading(isLoading, message = '') {
             const currentLoader = document.getElementById('loader');
             const currentPredictButton = document.getElementById('predictButton');
-
             if (isLoading) {
                  if (currentPredictButton) currentPredictButton.disabled = true;
                  if (currentLoader) currentLoader.classList.remove('hidden');
@@ -597,16 +615,14 @@
                  checkEnableButton();
             }
         }
-
         function showMessage(message, type = 'info') {
              const currentMessageBox = document.getElementById('messageBox');
              if (currentMessageBox) {
                 currentMessageBox.textContent = message;
-                currentMessageBox.className = `messageBox mt-4 p-2.5 rounded-md text-sm ${type}`;
+                currentMessageBox.className = `messageBox mt-5 p-3 rounded-md text-base ${type}`;
                 currentMessageBox.classList.remove('hidden');
              }
         }
-
 
         // --- Drag and Drop (Image Upload) ---
          const fileUploadWrapper = document.querySelector('.file-upload-wrapper');
@@ -626,7 +642,7 @@
             function handleDrop(e) {
                 const dt = e.dataTransfer;
                 const files = dt.files;
-                if (files.length > 0 && imageFileInput) { // Check if imageFileInput exists
+                if (files.length > 0 && imageFileInput) {
                     imageFileInput.files = files;
                     const changeEvent = new Event('change');
                     imageFileInput.dispatchEvent(changeEvent);
@@ -634,99 +650,57 @@
             }
          }
 
-
-        // --- Draggable Cards Logic (Improved) ---
+        // --- Draggable Cards Logic ---
         function initializeDraggableCards() {
             if (!howItWorksGrid) return;
-
             const draggableCards = howItWorksGrid.querySelectorAll('.draggable');
             draggableCards.forEach(card => {
                 card.addEventListener('mousedown', startDrag);
                 card.addEventListener('dragstart', (e) => e.preventDefault());
             });
         }
-
-        function startDrag(e) {
+        function startDrag(e) { /* ... (JS for dragging - unchanged) ... */
             if (e.button !== 0 || isDragging) return;
-
-            draggedCard = e.currentTarget;
-            isDragging = true;
-
+            draggedCard = e.currentTarget; isDragging = true;
             const cardRect = draggedCard.getBoundingClientRect();
             const gridRect = howItWorksGrid.getBoundingClientRect();
-
-            cardStartX = cardRect.left - gridRect.left;
-            cardStartY = cardRect.top - gridRect.top;
-            mouseStartX = e.pageX;
-            mouseStartY = e.pageY;
-
+            cardStartX = cardRect.left - gridRect.left; cardStartY = cardRect.top - gridRect.top;
+            mouseStartX = e.pageX; mouseStartY = e.pageY;
             targetX = e.clientX - gridRect.left - (cardRect.width / 2);
             targetY = e.clientY - gridRect.top - (cardRect.height / 2);
-
-            draggedCard.style.position = 'absolute';
-            draggedCard.style.left = `${targetX}px`;
-            draggedCard.style.top = `${targetY}px`;
-            draggedCard.style.width = `${cardRect.width}px`;
+            draggedCard.style.position = 'absolute'; draggedCard.style.left = `${targetX}px`;
+            draggedCard.style.top = `${targetY}px`; draggedCard.style.width = `${cardRect.width}px`;
             draggedCard.classList.add('dragging');
-
-            currentX = targetX;
-            currentY = targetY;
-
-            document.addEventListener('mousemove', dragMove);
-            document.addEventListener('mouseup', endDrag);
+            currentX = targetX; currentY = targetY;
+            document.addEventListener('mousemove', dragMove); document.addEventListener('mouseup', endDrag);
             document.addEventListener('mouseleave', endDrag);
-
-            cancelAnimationFrame(animationFrameId);
-            animationFrameId = requestAnimationFrame(updatePositionLoop);
+            cancelAnimationFrame(animationFrameId); animationFrameId = requestAnimationFrame(updatePositionLoop);
         }
-
-        function dragMove(e) {
-            if (!isDragging || !draggedCard) return;
-
-             preventDefaults(e);
-
+        function dragMove(e) { /* ... (JS for dragging - unchanged) ... */
+            if (!isDragging || !draggedCard) return; preventDefaults(e);
             const gridRect = howItWorksGrid.getBoundingClientRect();
-             const cardRect = draggedCard.getBoundingClientRect();
-             targetX = e.clientX - gridRect.left - (cardRect.width / 2);
-             targetY = e.clientY - gridRect.top - (cardRect.height / 2);
+            const cardRect = draggedCard.getBoundingClientRect();
+            targetX = e.clientX - gridRect.left - (cardRect.width / 2);
+            targetY = e.clientY - gridRect.top - (cardRect.height / 2);
         }
-
-        function updatePositionLoop() {
+        function updatePositionLoop() { /* ... (JS for dragging - unchanged) ... */
             if (!isDragging || !draggedCard) return;
-
-            const dx = targetX - currentX;
-            const dy = targetY - currentY;
-            currentX += dx * dampingFactor;
-            currentY += dy * dampingFactor;
-
-            draggedCard.style.left = `${currentX}px`;
-            draggedCard.style.top = `${currentY}px`;
-
+            const dx = targetX - currentX; const dy = targetY - currentY;
+            currentX += dx * dampingFactor; currentY += dy * dampingFactor;
+            draggedCard.style.left = `${currentX}px`; draggedCard.style.top = `${currentY}px`;
             animationFrameId = requestAnimationFrame(updatePositionLoop);
         }
-
-        function endDrag(e) {
-            if (!isDragging || !draggedCard) return;
-
-            isDragging = false;
-            cancelAnimationFrame(animationFrameId);
-
-            draggedCard.classList.remove('dragging');
-            draggedCard.style.width = '';
-
-             draggedCard.style.position = 'relative';
-             draggedCard.style.left = 'auto';
-             draggedCard.style.top = 'auto';
-
-            draggedCard = null;
-
-            document.removeEventListener('mousemove', dragMove);
-            document.removeEventListener('mouseup', endDrag);
-            document.removeEventListener('mouseleave', endDrag);
+        function endDrag(e) { /* ... (JS for dragging - unchanged) ... */
+            if (!isDragging || !draggedCard) return; isDragging = false;
+            cancelAnimationFrame(animationFrameId); draggedCard.classList.remove('dragging');
+            draggedCard.style.width = ''; draggedCard.style.position = 'relative';
+            draggedCard.style.left = 'auto'; draggedCard.style.top = 'auto';
+            draggedCard = null; document.removeEventListener('mousemove', dragMove);
+            document.removeEventListener('mouseup', endDrag); document.removeEventListener('mouseleave', endDrag);
         }
 
         // Initialize view state on load
-        showView('homePage'); // Start on the home page
+        showView('homePage');
 
     </script>
 </body>
