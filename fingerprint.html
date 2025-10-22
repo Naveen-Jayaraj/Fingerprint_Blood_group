@@ -6,7 +6,10 @@
     <title>Fingerprint Blood Group AI 🩸</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Import Cormorant Garamond font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script>
         // Set initial theme based on localStorage or system preference
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -17,111 +20,144 @@
     </script>
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            /* Apply Cormorant Garamond font */
+            font-family: 'Cormorant Garamond', serif;
             transition: background-color 0.3s ease, color 0.3s ease;
-            overflow-x: hidden; /* Prevent horizontal scroll if cards go off edge slightly */
+            overflow-x: hidden;
+            background-color: var(--bg-primary); /* Apply primary bg to body */
+            color: var(--text-primary);
         }
-        /* Light Theme Variables (Minimalist) */
+        /* Light Theme Variables (Beige Minimalist) */
         :root {
-            --bg-primary: #f8f9fa; /* Very light gray */
-            --bg-secondary: #ffffff; /* White */
-            --text-primary: #212529; /* Near black */
-            --text-secondary: #6c757d; /* Medium gray */
-            --accent-primary: #495057; /* Dark gray */
-            --accent-secondary: #e9ecef; /* Lighter gray */
-            --border-color: #dee2e6; /* Light gray border */
-            --border-dashed: #adb5bd; /* Medium gray dashed */
-            --shadow-color: rgba(0, 0, 0, 0.05);
+            --bg-primary: #fdfbf6; /* Light Beige */
+            --bg-secondary: #fffefb; /* Warmer White */
+            --text-primary: #3a2e20; /* Dark Brown */
+            --text-secondary: #7a6a53; /* Medium Brown */
+            --accent-primary: #8c6d46; /* Soft Brown */
+            --accent-secondary: #f3eee8; /* Lighter Beige */
+            --border-color: #e0d8cc; /* Beige Border */
+            --border-dashed: #bfae9a; /* Darker Beige Border */
+            --shadow-color: rgba(140, 109, 70, 0.08); /* Soft Brown Shadow */
+            --nav-bg: rgba(253, 251, 246, 0.85); /* Semi-transparent light beige */
+            --button-text: #fdfbf6; /* Light text for buttons */
         }
         /* Dark Theme Variables (AMOLED Black Minimalist) */
         .dark {
-            --bg-primary: #000000; /* AMOLED Black */
-            --bg-secondary: #111111; /* Very dark gray */
-            --text-primary: #e9ecef; /* Light gray */
-            --text-secondary: #adb5bd; /* Medium gray */
-            --accent-primary: #dee2e6; /* Light gray */
-            --accent-secondary: #343a40; /* Darker gray */
-            --border-color: #495057; /* Dark gray border */
-            --border-dashed: #6c757d; /* Medium gray dashed */
-            --shadow-color: rgba(255, 255, 255, 0.1);
+            --bg-primary: #000000;
+            --bg-secondary: #111111;
+            --text-primary: #e0d8cc; /* Light Beige Text */
+            --text-secondary: #a09383; /* Muted Beige Text */
+            --accent-primary: #fde68a; /* Pale Yellow Accent */
+            --accent-secondary: #222222; /* Darker Gray */
+            --border-color: #444444; /* Medium Gray Border */
+            --border-dashed: #666666; /* Lighter Gray Border */
+            --shadow-color: rgba(253, 230, 138, 0.1); /* Pale Yellow Shadow */
+            --nav-bg: rgba(17, 17, 17, 0.85); /* Semi-transparent dark gray */
+            --button-text: #111111; /* Dark text for dark mode buttons */
         }
+
+        /* General page layout */
+        .page-container {
+             min-height: 100vh;
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             padding: 4.5rem 1rem 1rem 1rem; /* Adjusted top padding for navbar */
+        }
+         .content-wrapper {
+             width: 100%;
+             max-width: 36rem;
+         }
+
         .content-section {
             background-color: var(--bg-secondary);
             border-radius: 0.5rem;
             padding: 2rem;
             border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
         }
          .dark .content-section {
-             background-color: var(--bg-primary);
+             background-color: var(--bg-secondary);
              border: 1px solid var(--border-color);
          }
+         .content-section:last-of-type {
+            margin-bottom: 0;
+         }
 
-        #howItWorksGrid {
-            position: relative; /* Crucial for absolute positioning of children */
+        /* Navbar Styles */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0; z-index: 50;
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
+        .navbar-content {
+            max-width: 36rem; margin: 0 auto; display: flex;
+            justify-content: space-between; align-items: center;
+        }
+        .navbar-title {
+             font-size: 1.2rem; /* Slightly larger */
+             font-weight: 600; color: var(--text-primary); white-space: nowrap;
+        }
+
+        #howItWorksGrid { position: relative; }
 
         .file-upload-wrapper {
-            border: 2px dashed var(--border-dashed);
-            background-color: transparent;
-            color: var(--text-secondary);
+            border: 2px dashed var(--border-dashed); background-color: transparent; color: var(--text-secondary);
             transition: background-color 0.3s ease, border-color 0.3s ease;
-            cursor: pointer;
-            padding: 2rem;
+            cursor: pointer; padding: 2rem; text-align: center; border-radius: 0.5rem;
         }
-        .file-upload-wrapper:hover {
-            border-color: var(--accent-primary);
-            background-color: var(--accent-secondary);
-             color: var(--text-primary);
-        }
-         .dark .file-upload-wrapper:hover {
-              background-color: var(--bg-secondary);
-         }
+        .file-upload-wrapper:hover { border-color: var(--accent-primary); background-color: var(--accent-secondary); color: var(--text-primary); }
+         .dark .file-upload-wrapper:hover { background-color: var(--bg-secondary); }
         input[type="file"] { display: none; }
 
         button {
             background-color: var(--accent-primary);
-            color: var(--bg-primary);
-            transition: background-color 0.3s ease, transform 0.1s ease;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.375rem;
-            font-weight: 500;
+            color: var(--button-text); /* Use variable for button text */
+            transition: background-color 0.3s ease, transform 0.1s ease, color 0.3s ease;
+            padding: 0.75rem 1.5rem; border-radius: 0.375rem; font-weight: 500; display: inline-flex;
+            align-items: center; justify-content: center;
         }
-         .dark button {
-             color: var(--bg-primary);
-         }
-        button:hover {
+        /* Make home page button visible in dark mode */
+        .dark #goToPredictorBtn {
+            background-color: var(--accent-primary); /* Pale Yellow */
+            color: var(--bg-secondary); /* Dark Background */
+        }
+        .dark #goToPredictorBtn:hover {
             filter: brightness(115%);
         }
-         .dark button:hover {
-             filter: brightness(125%);
+
+         /* Specific button for header */
+         #themeToggle, #backToHomeBtn { background-color: transparent; padding: 0.5rem; }
+         #backToHomeBtn { color: var(--text-secondary); font-size: 0.875rem; }
+         #backToHomeBtn:hover { background-color: var(--accent-secondary); color: var(--accent-primary); }
+
+         .dark button { /* Default dark mode button uses accent as bg */
+             background-color: var(--accent-primary);
+             color: var(--button-text); /* Use variable */
          }
-        button:active {
-            transform: translateY(1px);
-        }
+         .dark #themeToggle, .dark #backToHomeBtn { color: var(--text-secondary); background-color: transparent; }
+         .dark #themeToggle:hover, .dark #backToHomeBtn:hover { background-color: var(--accent-secondary); color: var(--accent-primary); }
+
+        button:hover { filter: brightness(115%); }
+         .dark button:hover:not(#themeToggle):not(#backToHomeBtn) { filter: brightness(115%); } /* Adjusted dark hover */
+        button:active { transform: translateY(1px); }
         button:disabled {
-            filter: grayscale(80%);
-            opacity: 0.4;
-            cursor: not-allowed;
-            background-color: var(--accent-secondary);
+            filter: grayscale(80%); opacity: 0.4; cursor: not-allowed;
+            background-color: var(--accent-secondary) !important; color: var(--text-secondary) !important;
         }
-         .dark button:disabled {
-              background-color: var(--accent-secondary);
-         }
+         .dark button:disabled { background-color: var(--accent-secondary) !important; color: var(--text-secondary) !important; }
 
         #result span {
-            display: inline-block;
-            background-color: var(--accent-secondary);
-            color: var(--accent-primary);
-            border: 1px solid var(--border-color);
-            padding: 0.5rem 1.5rem;
-            border-radius: 0.375rem;
-            font-weight: 600;
-            font-size: 1.25rem;
+            display: inline-block; background-color: var(--accent-secondary); color: var(--accent-primary);
+            border: 1px solid var(--border-color); padding: 0.5rem 1.5rem; border-radius: 0.375rem;
+            font-weight: 600; font-size: 1.25rem;
         }
-         .dark #result span {
-             border: 1px solid var(--border-color);
-             color: var(--text-primary);
-         }
+         .dark #result span { background-color: var(--accent-secondary); border: 1px solid var(--border-color); color: var(--text-primary); }
 
         #messageBox { font-size: 0.9rem; border-radius: 0.375rem; }
         .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;}
@@ -139,151 +175,170 @@
         @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         /* Smooth theme transition */
-        html, body, .content-section, .about-card, input, button, #result span, .file-upload-wrapper, label, h1, h2, p, a, svg, summary {
+        html, body, nav, .content-section, .about-card, input, button, #result span, .file-upload-wrapper, label, h1, h2, h3, p, a, svg, summary, span {
             transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, fill 0.3s ease, box-shadow 0.3s ease;
         }
-        .about-section h2 {
-            font-size: 1.25rem; margin-bottom: 1.5rem; color: var(--text-primary); text-align: center;
-        }
+        .about-section h2 { font-size: 1.5rem; /* Larger heading */ margin-bottom: 1.5rem; color: var(--text-primary); text-align: center; }
         .about-card {
-            background-color: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 0.5rem;
-            padding: 1rem 1.5rem;
-            box-shadow: 0 4px 6px -1px var(--shadow-color);
-            cursor: grab;
-            user-select: none; /* Prevent text selection while dragging */
-            position: relative; /* Start relative */
-            transition: transform 0.2s ease, box-shadow 0.2s ease; /* Keep hover effect transition */
-            /* Ensure initial position is not affected by drag styles */
-            left: auto;
-            top: auto;
+            background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 0.5rem;
+            padding: 1rem 1.5rem; box-shadow: 0 4px 6px -1px var(--shadow-color); cursor: grab;
+            user-select: none; position: relative; transition: transform 0.2s ease, box-shadow 0.2s ease; left: auto; top: auto;
         }
-        .about-card:hover {
-            /* Keep hover effect only when not dragging */
-            transform: translateY(-2px);
-            box-shadow: 0 8px 12px -2px var(--shadow-color);
-        }
-        .about-card h3 {
-            font-size: 0.9rem; font-weight: 600; color: var(--accent-primary); margin-bottom: 0.5rem;
-        }
-        .about-card p { color: var(--text-secondary); font-size: 0.8rem; line-height: 1.4; }
+        .dark .about-card { background-color: var(--bg-secondary); }
+        .about-card:hover { transform: translateY(-2px); box-shadow: 0 8px 12px -2px var(--shadow-color); }
+        .about-card h3 { font-size: 1rem; font-weight: 600; color: var(--accent-primary); margin-bottom: 0.5rem; }
+         .dark .about-card h3 { color: var(--accent-primary); }
+        .about-card p { color: var(--text-secondary); font-size: 0.9rem; /* Slightly larger text */ line-height: 1.5; }
         .about-card code {
-            background-color: var(--accent-secondary);
-            padding: 0.1rem 0.3rem; border-radius: 0.25rem; font-size: 0.8em;
-            color: var(--accent-primary);
+            background-color: var(--accent-secondary); padding: 0.1rem 0.3rem; border-radius: 0.25rem;
+            font-size: 0.8em; color: var(--accent-primary); font-family: monospace; /* Monospace for code */
         }
-        .dark .about-card code { color: var(--text-primary); }
+        .dark .about-card code { color: var(--text-primary); background-color: var(--accent-secondary); }
 
         .dragging {
-            position: absolute; /* Switch to absolute for dragging */
-            cursor: grabbing;
-            opacity: 0.85; /* Slightly less transparent */
-            z-index: 1000; /* Ensure dragged card is on top */
-            box-shadow: 0 10px 20px -3px rgba(0,0,0,0.2);
-            transition: none; /* Disable transitions while dragging */
-            transform: scale(1.02); /* Slight scale */
+            position: absolute; cursor: grabbing; opacity: 0.85; z-index: 1000;
+            box-shadow: 0 10px 20px -3px rgba(0,0,0,0.2); transition: none; transform: scale(1.02);
         }
-        .dragging:hover {
-             /* Disable hover transform/shadow while dragging */
-             transform: scale(1.02);
-             box-shadow: 0 10px 20px -3px rgba(0,0,0,0.2);
-        }
-        .dark .dragging, .dark .dragging:hover {
-             box-shadow: 0 10px 20px -3px rgba(255,255,255,0.2);
-        }
-
+        .dragging:hover { transform: scale(1.02); box-shadow: 0 10px 20px -3px rgba(0,0,0,0.2); }
+        .dark .dragging, .dark .dragging:hover { box-shadow: 0 10px 20px -3px rgba(255,255,255,0.2); }
 
         .github-button svg { fill: currentColor; }
         .header-icon { color: var(--text-secondary); }
         .header-icon:hover { color: var(--accent-primary); }
+
+        /* Home Page specific styles */
+        #homePage { text-align: center; }
+        #homePage h1.title { font-size: 3rem; /* Larger title */ font-weight: 700; margin-bottom: 1.5rem; }
+        #homePage h1.emoji { font-size: 3.5rem; margin-bottom: 0.5rem; }
+        #homePage p { font-size: 1.1rem; /* Larger para */ margin-bottom: 2.5rem; color: var(--text-secondary); max-width: 90%; margin-left: auto; margin-right: auto; }
+        #goToPredictorBtn { font-size: 1.1rem; /* Larger button */ }
+
+        /* Footer */
+        footer { text-align: center; font-size: 0.8rem; /* Slightly larger footer */ color: var(--text-secondary); padding-top: 2rem; padding-bottom: 1rem; }
+        footer a { color: var(--text-secondary); }
+        footer a:hover { color: var(--accent-primary); }
+
+        /* Hide/Show Views */
+        .view { display: none; }
+        .view.active { display: block; }
     </style>
 </head>
-<body class="bg-[--bg-primary] text-[--text-primary] min-h-screen flex items-center justify-center p-4">
+<body class="bg-[--bg-primary] text-[--text-primary]">
 
-    <div class="w-full max-w-lg space-y-6">
-
-        <!-- Header -->
-        <header class="flex justify-between items-center">
-            <h1 class="text-xl font-semibold text-[--text-primary]">
-                Fingerprint Blood Group AI 🩸
-            </h1>
-            <button id="themeToggle" aria-label="Toggle dark mode" class="p-2 rounded-md hover:bg-[--accent-secondary]">
-                <svg id="sunIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 header-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M12 18a6 6 0 100-12 6 6 0 000 12z" />
-                </svg>
-                 <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 header-icon hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                   <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                 </svg>
-            </button>
-        </header>
-
-        <!-- Prediction Section -->
-        <div class="content-section space-y-4">
-             <p class="text-[--text-secondary] text-sm">
-                 Upload a fingerprint image to predict the blood group using the AI model running in your browser.
-             </p>
-             <div>
-                 <label for="imageFile" class="text-sm font-medium text-[--text-primary] mb-2 block">Fingerprint Image:</label>
-                 <label for="imageFile" class="file-upload-wrapper block rounded-md p-4 text-center">
-                     <span class="file-upload-text block text-xs font-medium" id="fileUploadText">
-                         Click or drag image here
-                     </span>
-                     <input type="file" id="imageFile" accept="image/*" required>
-                 </label>
+    <!-- Navbar -->
+    <nav>
+        <div class="navbar-content">
+             <div id="navLeft" class="flex items-center">
+                 <!-- Back button - hidden on home page -->
+                <button id="backToHomeBtn" class="p-2 rounded-md hover:bg-[--accent-secondary] text-sm text-[--text-secondary] hover:text-[--accent-primary] mr-2 hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                       <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                </button>
+                <span class="navbar-title">Fingerprint AI 🩸</span>
              </div>
-             <img id="imagePreview" src="#" alt="Preview" class="w-24 h-24 object-cover mx-auto rounded-md border border-[--border-color] bg-[--bg-primary] hidden mt-3"/>
-             <button id="predictButton" disabled class="w-full justify-center mt-4 py-2">
-                 Predict
-                 <span id="loader" class="loader hidden"></span>
+             <button id="themeToggle" aria-label="Toggle dark mode" class="p-2 rounded-md hover:bg-[--accent-secondary]">
+                 <svg id="sunIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 header-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M12 18a6 6 0 100-12 6 6 0 000 12z" />
+                 </svg>
+                  <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 header-icon hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                  </svg>
              </button>
-             <div id="messageBox" class="hidden mt-4 p-2.5 rounded-md text-sm"></div>
-             <div id="result" class="mt-5 text-center text-lg font-medium text-[--text-primary]"></div>
         </div>
+    </nav>
 
-        <!-- How It Works Section (Draggable Cards) -->
-        <div class="content-section about-section">
-            <h2 class="text-xl font-semibold text-[--text-primary] mb-4">How It Works (Drag Cards)</h2>
-            <div id="howItWorksGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <!-- Cards -->
-                <div class="about-card draggable" id="card-1">
-                    <h3>1. Data Source</h3>
-                    <p>Trained on Kaggle's "Finger Print Based Blood Group Dataset" with labels like <code>A+</code>, <code>B-</code>, etc.</p>
-                </div>
-                 <div class="about-card draggable" id="card-2">
-                    <h3>2. Model Creation</h3>
-                    <p>A CNN built with TensorFlow/Keras (<code>Conv2D</code>, <code>MaxPool</code>, <code>Dropout</code>, <code>Dense</code>).</p>
-                 </div>
-                 <div class="about-card draggable" id="card-3">
-                    <h3>3. Image Handling</h3>
-                    <p>Images resized to <code>64x64px</code> and pixel values normalized (0-1 range).</p>
-                 </div>
-                 <div class="about-card draggable" id="card-4">
-                    <h3>4. Training</h3>
-                    <p>Learned using Adam optimizer and crossentropy loss. Best model saved (<code>.h5</code>).</p>
-                 </div>
-                 <div class="about-card draggable" id="card-5">
-                    <h3>5. Browser Conversion</h3>
-                    <p><code>.h5</code> converted to TensorFlow.js format (<code>model.json</code> + <code>.bin</code>) via converter tool.</p>
-                 </div>
-                 <div class="about-card draggable" id="card-6">
-                    <h3>6. Web Interface</h3>
-                    <p>HTML, Tailwind CSS, JS. TensorFlow.js runs prediction locally in your browser.</p>
-                 </div>
+    <div class="page-container">
+        <div class="content-wrapper">
+
+            <!-- Home Page View -->
+            <div id="homePage" class="view active content-section"> <!-- Start visible -->
+                 <h1 class="emoji text-[--text-primary]">🩸</h1>
+                 <h1 class="title text-[--text-primary]">Fingerprint Blood Group AI</h1>
+                 <p>
+                     Discover the potential link between fingerprints and blood types. Upload a fingerprint image and let our AI model predict the corresponding blood group, all securely within your browser.
+                 </p>
+                 <button id="goToPredictorBtn">
+                     Try the Predictor
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                       <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                     </svg>
+                 </button>
             </div>
-        </div>
 
-         <!-- Footer -->
-         <footer class="text-center text-xs text-[--text-secondary] pt-4 pb-2">
-            <p>Created by [Your Name Here]</p> <!-- Placeholder -->
-            <a href="[Your GitHub Repo Link Here]" target="_blank" rel="noopener noreferrer" class="github-button inline-flex items-center space-x-1 text-[--text-secondary] hover:text-[--accent-primary] mt-1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
-                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
-                </svg>
-                <span>View on GitHub</span>
-             </a>
-         </footer>
-    </div>
+            <!-- Predictor Page View -->
+            <div id="predictorPage" class="view space-y-6"> <!-- Start hidden -->
+
+                <!-- Prediction Section -->
+                <div class="content-section space-y-4">
+                     <p class="text-[--text-secondary] text-sm">
+                         Upload a fingerprint image to predict the blood group using the AI model running in your browser.
+                     </p>
+                     <div>
+                         <label for="imageFile" class="text-sm font-medium text-[--text-primary] mb-2 block">Fingerprint Image:</label>
+                         <label for="imageFile" class="file-upload-wrapper block rounded-md p-4 text-center">
+                             <span class="file-upload-text block text-xs font-medium" id="fileUploadText">
+                                 Click or drag image here
+                             </span>
+                             <input type="file" id="imageFile" accept="image/*" required>
+                         </label>
+                     </div>
+                     <img id="imagePreview" src="#" alt="Preview" class="w-24 h-24 object-cover mx-auto rounded-md border border-[--border-color] bg-[--bg-primary] hidden mt-3"/>
+                     <button id="predictButton" disabled class="w-full justify-center mt-4 py-2">
+                         Predict
+                         <span id="loader" class="loader hidden"></span>
+                     </button>
+                     <div id="messageBox" class="hidden mt-4 p-2.5 rounded-md text-sm"></div>
+                     <div id="result" class="mt-5 text-center text-lg font-medium text-[--text-primary]"></div>
+                </div>
+
+                <!-- How It Works Section (Draggable Cards) -->
+                <div class="content-section about-section">
+                    <h2 class="text-xl font-semibold text-[--text-primary] mb-4">How It Works (Drag Cards)</h2>
+                    <div id="howItWorksGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <!-- Cards -->
+                        <div class="about-card draggable" id="card-1">
+                            <h3>1. Data Source</h3>
+                            <p>Trained on Kaggle's "Finger Print Based Blood Group Dataset" with labels like <code>A+</code>, <code>B-</code>, etc.</p>
+                        </div>
+                         <div class="about-card draggable" id="card-2">
+                            <h3>2. Model Creation</h3>
+                            <p>A CNN built with TensorFlow/Keras (<code>Conv2D</code>, <code>MaxPool</code>, <code>Dropout</code>, <code>Dense</code>).</p>
+                         </div>
+                         <div class="about-card draggable" id="card-3">
+                            <h3>3. Image Handling</h3>
+                            <p>Images resized to <code>64x64px</code> and pixel values normalized (0-1 range).</p>
+                         </div>
+                         <div class="about-card draggable" id="card-4">
+                            <h3>4. Training</h3>
+                            <p>Learned using Adam optimizer and crossentropy loss. Best model saved (<code>.h5</code>).</p>
+                         </div>
+                         <div class="about-card draggable" id="card-5">
+                            <h3>5. Browser Conversion</h3>
+                            <p><code>.h5</code> converted to TensorFlow.js format (<code>model.json</code> + <code>.bin</code>) via converter tool.</p>
+                         </div>
+                         <div class="about-card draggable" id="card-6">
+                            <h3>6. Web Interface</h3>
+                            <p>HTML, Tailwind CSS, JS. TensorFlow.js runs prediction locally in your browser.</p>
+                         </div>
+                    </div>
+                </div>
+            </div> <!-- End Predictor Page View -->
+
+             <!-- Footer (Now outside specific views but inside wrapper) -->
+             <footer>
+                <p>Created by [Your Name Here]</p> <!-- Placeholder -->
+                <a href="[Your GitHub Repo Link Here]" target="_blank" rel="noopener noreferrer" class="github-button inline-flex items-center space-x-1 mt-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
+                    </svg>
+                    <span>View on GitHub</span>
+                 </a>
+                 <p class="mt-1">Contact: [Your Contact Info/Link Here]</p> <!-- Placeholder -->
+             </footer>
+
+        </div> <!-- End Content Wrapper -->
+    </div> <!-- End Page Container -->
 
     <!-- Offscreen canvas for processing -->
     <canvas id="offscreenCanvas" width="64" height="64" style="display:none;"></canvas>
@@ -304,10 +359,16 @@
         const moonIcon = document.getElementById('moonIcon');
         const htmlElement = document.documentElement;
         const howItWorksGrid = document.getElementById('howItWorksGrid');
+        const homePageView = document.getElementById('homePage');
+        const predictorPageView = document.getElementById('predictorPage');
+        const goToPredictorBtn = document.getElementById('goToPredictorBtn');
+        const backToHomeBtn = document.getElementById('backToHomeBtn');
+
 
         // --- State ---
         let model = null;
         let imageFile = null;
+        let modelLoaded = false; // Flag to load model only once
         const modelPath = './tfjs_model/model.json'; // Relative path to the model JSON
         const CLASS_NAMES = ['A+', 'A-', 'AB+', 'AB-', 'B+', 'B-', 'O+', 'O-'];
         const IMG_SIZE = 64;
@@ -317,9 +378,37 @@
         let isDragging = false;
         let currentX, currentY, targetX, targetY;
         let animationFrameId = null;
-        const dampingFactor = 0.2; // How fast the card follows the mouse (0-1, smaller is slower)
-        let cardStartX, cardStartY; // Card's initial offset in the grid
-        let mouseStartX, mouseStartY; // Mouse position when drag starts relative to page
+        const dampingFactor = 0.2;
+        let cardStartX, cardStartY;
+        let mouseStartX, mouseStartY;
+
+        // --- View Navigation ---
+        function showView(viewId) {
+            document.querySelectorAll('.view').forEach(view => {
+                view.classList.remove('active');
+            });
+            const viewToShow = document.getElementById(viewId);
+            if (viewToShow) {
+                viewToShow.classList.add('active');
+            }
+
+            // Show/Hide Back button based on view
+            if (viewId === 'predictorPage') {
+                backToHomeBtn.classList.remove('hidden');
+            } else {
+                backToHomeBtn.classList.add('hidden');
+            }
+
+            // Load model and init cards only when showing predictor page for the first time
+            if (viewId === 'predictorPage' && !modelLoaded) {
+                 loadModel();
+                 initializeDraggableCards();
+                 modelLoaded = true; // Set flag
+            }
+        }
+
+        goToPredictorBtn.addEventListener('click', () => showView('predictorPage'));
+        backToHomeBtn.addEventListener('click', () => showView('homePage'));
 
         // --- Theme Toggle Logic ---
         function applyTheme(isDark) {
@@ -338,18 +427,9 @@
             localStorage.theme = isDarkMode ? 'dark' : 'light';
             applyTheme(isDarkMode);
         });
+        // Apply theme initially
         applyTheme(localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches));
 
-
-        // --- Load Model & Init Draggable Cards on Page Load ---
-        document.addEventListener('DOMContentLoaded', () => {
-            loadModel();
-            initializeDraggableCards();
-        });
-
-        // --- Event Listeners ---
-        imageFileInput.addEventListener('change', handleImageFile);
-        predictButton.addEventListener('click', predict);
 
         // --- File Handling ---
         function handleImageFile(event) {
@@ -374,11 +454,24 @@
              checkEnableButton();
         }
         function checkEnableButton() {
-            predictButton.disabled = !(model && imageFile);
-            if (!(model && imageFile)) {
-                 resultDiv.textContent = '';
+            // Check if predict button exists before trying to access disabled property
+            if (predictButton) {
+                predictButton.disabled = !(model && imageFile);
+                if (!(model && imageFile) && resultDiv) { // Check if resultDiv exists
+                    resultDiv.textContent = '';
+                }
             }
         }
+
+         // Add event listener only if imageFileInput exists
+         if (imageFileInput) {
+             imageFileInput.addEventListener('change', handleImageFile);
+         }
+         // Add event listener only if predictButton exists
+         if (predictButton) {
+             predictButton.addEventListener('click', predict);
+         }
+
 
         // --- TensorFlow.js Logic ---
         async function loadModel() {
@@ -390,7 +483,7 @@
             } catch (error) {
                 console.error("Error loading model:", error);
                 showMessage(`Model load error. Check console.`, 'error');
-                model = null;
+                model = null; // Ensure model is null on error
                 checkEnableButton();
             } finally {
                 setLoading(false);
@@ -426,14 +519,14 @@
                 return;
             }
             setLoading(true, 'Analyzing...');
-            resultDiv.innerHTML = '';
+            if (resultDiv) resultDiv.innerHTML = ''; // Check if resultDiv exists
             let tensor;
             try {
                 tensor = await preprocessImage(imageFile);
                 const predictionTensor = model.predict(tensor);
                 const predictedIndex = tf.argMax(predictionTensor, 1).dataSync()[0];
                 const predictedClass = CLASS_NAMES[predictedIndex];
-                resultDiv.innerHTML = `Predicted: <span>${predictedClass}</span>`;
+                if (resultDiv) resultDiv.innerHTML = `Predicted: <span>${predictedClass}</span>`;
                 showMessage('Analysis complete!', 'success');
                 predictionTensor.dispose();
             } catch (error) {
@@ -448,59 +541,69 @@
 
         // --- UI Helpers ---
         function setLoading(isLoading, message = '') {
-            const isInitialLoad = !model && isLoading;
+            const currentLoader = document.getElementById('loader');
+            const currentPredictButton = document.getElementById('predictButton');
+
             if (isLoading) {
-                if (!isInitialLoad) predictButton.disabled = true;
-                loader.classList.remove('hidden');
+                 if (currentPredictButton) currentPredictButton.disabled = true;
+                 if (currentLoader) currentLoader.classList.remove('hidden');
                  showMessage(message, 'info');
             } else {
-                loader.classList.add('hidden');
-                checkEnableButton();
+                 if (currentLoader) currentLoader.classList.add('hidden');
+                 checkEnableButton();
             }
         }
+
         function showMessage(message, type = 'info') {
-            messageBox.textContent = message;
-            messageBox.className = `messageBox mt-4 p-2.5 rounded-md text-sm ${type}`;
-            messageBox.classList.remove('hidden');
+             const currentMessageBox = document.getElementById('messageBox');
+             if (currentMessageBox) {
+                currentMessageBox.textContent = message;
+                currentMessageBox.className = `messageBox mt-4 p-2.5 rounded-md text-sm ${type}`;
+                currentMessageBox.classList.remove('hidden');
+             }
         }
 
 
         // --- Drag and Drop (Image Upload) ---
          const fileUploadWrapper = document.querySelector('.file-upload-wrapper');
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            fileUploadWrapper.addEventListener(eventName, preventDefaults, false);
-            document.body.addEventListener(eventName, preventDefaults, false);
-        });
-        function preventDefaults(e) { e.preventDefault(); e.stopPropagation(); }
-        ['dragenter', 'dragover'].forEach(eventName => {
-            fileUploadWrapper.addEventListener(eventName, () => fileUploadWrapper.classList.add('border-[--accent-primary]', 'bg-opacity-75', 'dark:bg-opacity-25'), false);
-        });
-        ['dragleave', 'drop'].forEach(eventName => {
-            fileUploadWrapper.addEventListener(eventName, () => fileUploadWrapper.classList.remove('border-[--accent-primary]', 'bg-opacity-75', 'dark:bg-opacity-25'), false);
-        });
-        fileUploadWrapper.addEventListener('drop', handleDrop, false);
-        function handleDrop(e) {
-            const dt = e.dataTransfer;
-            const files = dt.files;
-            if (files.length > 0) {
-                imageFileInput.files = files;
-                const changeEvent = new Event('change');
-                imageFileInput.dispatchEvent(changeEvent);
+         if (fileUploadWrapper) {
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                fileUploadWrapper.addEventListener(eventName, preventDefaults, false);
+                document.body.addEventListener(eventName, preventDefaults, false);
+            });
+            function preventDefaults(e) { e.preventDefault(); e.stopPropagation(); }
+            ['dragenter', 'dragover'].forEach(eventName => {
+                fileUploadWrapper.addEventListener(eventName, () => fileUploadWrapper.classList.add('border-[--accent-primary]', 'bg-opacity-75', 'dark:bg-opacity-25'), false);
+            });
+            ['dragleave', 'drop'].forEach(eventName => {
+                fileUploadWrapper.addEventListener(eventName, () => fileUploadWrapper.classList.remove('border-[--accent-primary]', 'bg-opacity-75', 'dark:bg-opacity-25'), false);
+            });
+            fileUploadWrapper.addEventListener('drop', handleDrop, false);
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                if (files.length > 0 && imageFileInput) { // Check if imageFileInput exists
+                    imageFileInput.files = files;
+                    const changeEvent = new Event('change');
+                    imageFileInput.dispatchEvent(changeEvent);
+                }
             }
-        }
+         }
 
 
         // --- Draggable Cards Logic (Improved) ---
         function initializeDraggableCards() {
-            const draggableCards = document.querySelectorAll('.draggable');
+            if (!howItWorksGrid) return;
+
+            const draggableCards = howItWorksGrid.querySelectorAll('.draggable');
             draggableCards.forEach(card => {
                 card.addEventListener('mousedown', startDrag);
-                card.addEventListener('dragstart', (e) => e.preventDefault()); // Prevent native drag
+                card.addEventListener('dragstart', (e) => e.preventDefault());
             });
         }
 
         function startDrag(e) {
-            if (e.button !== 0 || isDragging) return; // Only left button, prevent multi-drag
+            if (e.button !== 0 || isDragging) return;
 
             draggedCard = e.currentTarget;
             isDragging = true;
@@ -508,81 +611,53 @@
             const cardRect = draggedCard.getBoundingClientRect();
             const gridRect = howItWorksGrid.getBoundingClientRect();
 
-            // Card's initial offset *within the grid*
             cardStartX = cardRect.left - gridRect.left;
             cardStartY = cardRect.top - gridRect.top;
-
-            // Mouse position relative to the page when drag starts
             mouseStartX = e.pageX;
             mouseStartY = e.pageY;
 
-            // Offset of mouse pointer *within the card* (for centering)
-            const mouseOffsetX = e.clientX - cardRect.left;
-            const mouseOffsetY = e.clientY - cardRect.top;
-
-            // Calculate target position to center card under mouse initially, relative to grid
             targetX = e.clientX - gridRect.left - (cardRect.width / 2);
             targetY = e.clientY - gridRect.top - (cardRect.height / 2);
 
-
-            // Set initial absolute position and styles
             draggedCard.style.position = 'absolute';
             draggedCard.style.left = `${targetX}px`;
             draggedCard.style.top = `${targetY}px`;
-            draggedCard.style.width = `${cardRect.width}px`; // Fix width
+            draggedCard.style.width = `${cardRect.width}px`;
             draggedCard.classList.add('dragging');
 
-            currentX = targetX; // Start smoothing from the centered position
+            currentX = targetX;
             currentY = targetY;
 
             document.addEventListener('mousemove', dragMove);
             document.addEventListener('mouseup', endDrag);
             document.addEventListener('mouseleave', endDrag);
 
-            // Start the smooth animation loop
-            cancelAnimationFrame(animationFrameId); // Cancel any previous loop
+            cancelAnimationFrame(animationFrameId);
             animationFrameId = requestAnimationFrame(updatePositionLoop);
         }
 
         function dragMove(e) {
             if (!isDragging || !draggedCard) return;
 
-            preventDefaults(e); // Prevent text selection, etc.
+             preventDefaults(e);
 
             const gridRect = howItWorksGrid.getBoundingClientRect();
-
-            // Calculate the mouse's total displacement since drag started
-            const mouseDeltaX = e.pageX - mouseStartX;
-            const mouseDeltaY = e.pageY - mouseStartY;
-
-            // Calculate the target position based on initial card position + mouse displacement
-            // This version follows the mouse directly (target calculation)
-            // targetX = cardStartX + mouseDeltaX;
-            // targetY = cardStartY + mouseDeltaY;
-
-             // Calculate target position to keep card centered under mouse (target calculation)
-             const cardRect = draggedCard.getBoundingClientRect(); // Get current width/height
+             const cardRect = draggedCard.getBoundingClientRect();
              targetX = e.clientX - gridRect.left - (cardRect.width / 2);
              targetY = e.clientY - gridRect.top - (cardRect.height / 2);
-
         }
 
         function updatePositionLoop() {
             if (!isDragging || !draggedCard) return;
 
-            // Calculate difference between current and target
             const dx = targetX - currentX;
             const dy = targetY - currentY;
-
-            // Apply damping (move a fraction of the distance)
             currentX += dx * dampingFactor;
             currentY += dy * dampingFactor;
 
-            // Update the card's style
             draggedCard.style.left = `${currentX}px`;
             draggedCard.style.top = `${currentY}px`;
 
-            // Continue the loop
             animationFrameId = requestAnimationFrame(updatePositionLoop);
         }
 
@@ -593,9 +668,11 @@
             cancelAnimationFrame(animationFrameId);
 
             draggedCard.classList.remove('dragging');
-            // Keep absolute positioning where it dropped
-            // Optional: Add logic here to snap back or reorder grid items
-            draggedCard.style.width = ''; // Reset fixed width if needed
+            draggedCard.style.width = '';
+
+             draggedCard.style.position = 'relative';
+             draggedCard.style.left = 'auto';
+             draggedCard.style.top = 'auto';
 
             draggedCard = null;
 
@@ -603,6 +680,9 @@
             document.removeEventListener('mouseup', endDrag);
             document.removeEventListener('mouseleave', endDrag);
         }
+
+        // Initialize view state on load
+        showView('homePage'); // Start on the home page
 
     </script>
 </body>
