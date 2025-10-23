@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fingerprint Blood Group AI 🩸</title>
+    <title>The Fingerprint Scryer ✧ Soul Essence</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
     <!-- Import Cormorant Garamond font -->
@@ -62,11 +62,10 @@
             --button-text: #0a0a0a;
         }
 
-        /* General page layout - Adjusted for Full Screen */
+        /* General page layout */
         .page-container {
-             /* min-height removed, will rely on section heights */
-             padding: 5rem 1.5rem 1.5rem 1.5rem; /* Adjusted top padding for navbar */
-             box-sizing: border-box; /* Include padding in height calc */
+             padding: 5rem 1.5rem 1.5rem 1.5rem;
+             box-sizing: border-box;
              width: 100%;
              @media (min-width: 768px) {
                  padding-left: 3rem;
@@ -89,8 +88,8 @@
             border: 1px solid var(--border-color);
             margin-bottom: 2.5rem;
             box-shadow: 0 1px 3px 0 var(--shadow-color);
-             width: 100%; /* Ensure sections take full width */
-             box-sizing: border-box; /* Include padding in width */
+             width: 100%;
+             box-sizing: border-box;
              @media (min-width: 640px) {
                  padding: 3rem;
              }
@@ -103,27 +102,25 @@
             margin-bottom: 0;
          }
 
-        /* Full Height Section Styling - Adjusted Calculation */
+        /* Full Height Section Styling */
         .full-height-section {
-            /* Calculate height based on viewport minus fixed elements */
-            /* Navbar height is approx 3.5rem (padding + line height) */
-            min-height: calc(100vh - 5rem); /* Adjusted calculation */
+            min-height: calc(100vh - 5rem);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding-top: 2rem; /* Add some internal padding */
+            padding-top: 2rem;
             padding-bottom: 2rem;
             box-sizing: border-box;
-            width: 100%; /* Ensure it takes full width */
+            width: 100%;
         }
 
         /* Navbar Styles */
         nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 50;
             background-color: var(--nav-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-            padding: 0.85rem 1.5rem; height: 5rem; /* Fixed height for calc() */
+            padding: 0.85rem 1.5rem; height: 5rem;
              box-sizing: border-box;
              @media (min-width: 768px) {
                  padding-left: 3rem;
@@ -151,15 +148,11 @@
              }
         }
 
-
         .file-upload-wrapper {
             border: 1px dashed var(--border-dashed); background-color: transparent; color: var(--text-secondary);
             transition: background-color 0.3s ease, border-color 0.3s ease;
             cursor: pointer; padding: 3rem; text-align: center; border-radius: 0.375rem;
-            max-width: 400px;
-            margin-left: auto;
-            margin-right: auto;
-            width: 90%; /* Make it responsive within its container */
+            max-width: 400px; margin-left: auto; margin-right: auto; width: 90%;
         }
         .file-upload-wrapper:hover { border-color: var(--accent-primary); background-color: var(--accent-secondary); color: var(--text-primary); }
          .dark .file-upload-wrapper:hover { background-color: var(--bg-secondary); }
@@ -219,11 +212,8 @@
             transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, fill 0.3s ease, box-shadow 0.3s ease;
         }
         .about-section {
-             /* Remove fixed margin-bottom from .content-section */
              margin-bottom: 0 !important;
-             /* Add padding to the top to separate from prediction section */
              padding-top: 4rem;
-             /* Add padding to the bottom before the footer */
              padding-bottom: 4rem;
         }
 
@@ -240,7 +230,7 @@
         .about-card p { color: var(--text-secondary); font-size: 1rem; line-height: 1.6; }
         .about-card code {
             background-color: var(--accent-secondary); padding: 0.1rem 0.3rem; border-radius: 0.25rem;
-            font-size: 0.85em; color: var(--accent-primary); font-family: monospace;
+            font-size: 0.85em; color: var(--accent-primary); font-family: 'Courier New', Courier, monospace; /* Classic monospace */
         }
         .dark .about-card code { color: var(--text-primary); background-color: var(--accent-secondary); }
 
@@ -257,7 +247,7 @@
         .header-icon:hover { color: var(--accent-primary); }
 
         /* Home Page specific styles */
-        #homePage { text-align: center; max-width: 52rem; margin: 0 auto; /* Keep home content centered */ }
+        #homePage { text-align: center; max-width: 52rem; margin: 0 auto; }
         #homePage h1.title { font-size: 3.2rem; font-weight: 600; margin-bottom: 2rem; }
         #homePage h1.emoji { font-size: 3.5rem; margin-bottom: 0.75rem; }
         #homePage p { font-size: 1.2rem; margin-bottom: 3rem; color: var(--text-secondary); max-width: 90%; margin-left: auto; margin-right: auto; }
@@ -266,9 +256,9 @@
         /* Footer */
         footer {
             text-align: center; font-size: 0.9rem; color: var(--text-secondary);
-            padding: 3rem 1.5rem 1.5rem 1.5rem; /* Adjusted padding */
+            padding: 3rem 1.5rem 1.5rem 1.5rem;
             width: 100%; box-sizing: border-box;
-            background-color: var(--bg-primary); /* Ensure footer matches page background */
+            background-color: var(--bg-primary);
              @media (min-width: 768px) {
                  padding-left: 3rem;
                  padding-right: 3rem;
@@ -280,6 +270,7 @@
         }
         footer a { color: var(--text-secondary); }
         footer a:hover { color: var(--accent-primary); }
+        footer .love { font-size: 0.8rem; margin-top: 0.25rem; } /* Style for "made with love" */
 
         /* Hide/Show Views */
         .view { display: none; }
@@ -288,15 +279,14 @@
         #howItWorksGrid { min-height: 200px; }
 
          /* Prediction section specific content centering */
-        #predictionSection > div { /* Target the inner div */
+        #predictionSection > div {
             width: 100%;
-            max-width: 40rem; /* Limit width of content inside */
+            max-width: 40rem;
             margin-left: auto;
             margin-right: auto;
-            padding-left: 1rem; /* Add some padding for smaller screens */
+            padding-left: 1rem;
             padding-right: 1rem;
         }
-
 
     </style>
 </head>
@@ -311,7 +301,7 @@
                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
                 </button>
-                <span class="navbar-title">Fingerprint AI 🩸</span>
+                <span class="navbar-title">The Fingerprint Scryer ✧</span> <!-- Updated Title -->
              </div>
              <button id="themeToggle" aria-label="Toggle dark mode" class="p-2 rounded-md hover:bg-[--accent-secondary]">
                  <svg id="sunIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 header-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -330,13 +320,13 @@
             <!-- Home Page View -->
             <div id="homePage" class="view active content-section full-height-section">
                  <div>
-                     <h1 class="emoji text-[--text-primary]">🩸</h1>
-                     <h1 class="title text-[--text-primary]">Fingerprint Blood Group AI</h1>
+                     <h1 class="emoji text-[--text-primary]">✧</h1> <!-- Updated Emoji -->
+                     <h1 class="title text-[--text-primary]">Behold, the Fingerprint Scryer</h1> <!-- Updated Title -->
                      <p>
-                         Discover the potential link between fingerprints and blood types. Upload a fingerprint image and let our AI model predict the corresponding blood group, all securely within your browser.
-                     </p>
+                         Unveil the hidden truths held within thy hand's mark. Present forth an image of thy fingerprint, and allow this enchanted artefact to divine the nature of thy soul's essence, safely held within the confines of thine own browser-glass.
+                     </p> <!-- Updated Paragraph -->
                      <button id="goToPredictorBtn">
-                         Try the Predictor
+                         Consult the Scryer <!-- Updated Button Text -->
                          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                          </svg>
@@ -345,21 +335,21 @@
             </div>
 
             <!-- Predictor Page View -->
-            <div id="predictorPage" class="view"> <!-- Removed space-y -->
+            <div id="predictorPage" class="view">
 
                 <!-- Prediction Section - Full height -->
                 <div id="predictionSection" class="content-section full-height-section space-y-6">
                     <div>
-                        <label for="imageFile" class="text-base font-medium text-[--text-secondary] mb-3 block">Upload Fingerprint Image:</label>
+                        <label for="imageFile" class="text-base font-medium text-[--text-secondary] mb-3 block">Offer Thy Hand's Mark:</label> <!-- Updated Label -->
                         <label for="imageFile" class="file-upload-wrapper block rounded-md p-6 text-center">
                              <span class="file-upload-text block text-sm font-medium" id="fileUploadText">
-                                 Click or drag image
-                             </span>
+                                 Click hither or bestow image upon this place
+                             </span> <!-- Updated Dropzone Text -->
                              <input type="file" id="imageFile" accept="image/*" required>
                          </label>
                         <img id="imagePreview" src="#" alt="Preview" class="w-24 h-24 object-cover mx-auto rounded-md border border-[--border-color] bg-[--bg-primary] hidden mt-4"/>
                         <button id="predictButton" disabled class="w-full max-w-xs mx-auto justify-center mt-5 py-3 text-lg">
-                             Predict
+                             Divine Essence <!-- Updated Button Text -->
                              <span id="loader" class="loader hidden"></span>
                         </button>
                         <div id="messageBox" class="hidden mt-5 p-3 rounded-md text-base"></div>
@@ -369,31 +359,32 @@
 
                 <!-- How It Works Section - Regular flow -->
                 <div id="aboutSection" class="content-section about-section">
-                    <h2 class="text-xl font-semibold text-[--text-primary] mb-6">How It Works (Drag Cards)</h2>
+                    <h2 class="text-xl font-semibold text-[--text-primary] mb-6">The Artefact's Craft (Drag Scrolls)</h2> <!-- Updated Title -->
                     <div id="howItWorksGrid" class="grid gap-5">
+                        <!-- Cards -->
                         <div class="about-card draggable" id="card-1">
-                            <h3>1. Data</h3>
-                            <p>Trained on Kaggle's Fingerprint/Blood Group dataset (<code>A+</code>, <code>B-</code>...).</p>
+                            <h3>1. Ancient Lore</h3> <!-- Updated -->
+                            <p>Tutored upon Kaggle's scrolls of "Finger Prints and Lifeblood Signs" (<code>A+</code>, <code>B-</code>...).</p> <!-- Updated -->
                         </div>
                          <div class="about-card draggable" id="card-2">
-                            <h3>2. Model</h3>
-                            <p>CNN via TensorFlow/Keras (<code>Conv2D</code>, <code>MaxPool</code>, <code>Dropout</code>, <code>Dense</code>).</p>
-                         </div>
+                            <h3>2. Crystal Matrix</h3> <!-- Updated -->
+                            <p>Wrought with TensorFlow/Keras enchantments (<code>Conv2D</code>, <code>MaxPool</code>, <code>Dropout</code>, <code>Dense</code>).</p> <!-- Updated -->
+                        </div>
                          <div class="about-card draggable" id="card-3">
-                            <h3>3. Images</h3>
-                            <p>Resized to <code>64x64px</code> & normalized (0-1).</p>
-                         </div>
+                            <h3>3. Mark Scrutiny</h3> <!-- Updated -->
+                            <p>Imprints resized to <code>64x64px</code> & essence refined (0-1).</p> <!-- Updated -->
+                        </div>
                          <div class="about-card draggable" id="card-4">
-                            <h3>4. Training</h3>
-                            <p>Used Adam optimizer & crossentropy loss (<code>.h5</code> saved).</p>
-                         </div>
+                            <h3>4. Attunement</h3> <!-- Updated -->
+                            <p>Imbued via Adam's Method & crossentropy rite (<code>.h5</code> sealed).</p> <!-- Updated -->
+                        </div>
                          <div class="about-card draggable" id="card-5">
-                            <h3>5. Conversion</h3>
-                            <p><code>.h5</code> model converted to TensorFlow.js format.</p>
-                         </div>
+                            <h3>5. Æther Weaving</h3> <!-- Updated -->
+                            <p><code>.h5</code> seal transmuted to TensorFlow.js runes.</p> <!-- Updated -->
+                        </div>
                          <div class="about-card draggable" id="card-6">
-                            <h3>6. Interface</h3>
-                            <p>HTML/CSS/JS with TensorFlow.js for in-browser prediction.</p>
+                            <h3>6. Scrying Mirror</h3> <!-- Updated -->
+                            <p>HTML/CSS/JS portal. TensorFlow.js scries within thy browser.</p> <!-- Updated -->
                          </div>
                     </div>
                 </div>
@@ -401,14 +392,15 @@
 
              <!-- Footer -->
              <footer class="w-full">
-                <p>Created by [Your Name Here]</p>
-                <a href="[Your GitHub Repo Link Here]" target="_blank" rel="noopener noreferrer" class="github-button inline-flex items-center space-x-1 mt-1">
+                <p>Crafted by Naveen Jayaraj</p> <!-- Updated -->
+                <a href="https://github.com/Naveen-Jayaraj/Fingerprint_Blood_group" target="_blank" rel="noopener noreferrer" class="github-button inline-flex items-center space-x-1 mt-1"> <!-- Updated -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
                         <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
                     </svg>
-                    <span>View on GitHub</span>
+                    <span>View Scroll on GitHub</span> <!-- Updated -->
                  </a>
-                 <p class="mt-1">Contact: [Your Contact Info/Link Here]</p>
+                 <p class="mt-1">Seek Audience: <a href="https://naveen-jayaraj.github.io/Portfolio_Website" target="_blank" rel="noopener noreferrer">Portfolio Portal</a></p> <!-- Updated -->
+                 <p class="love">~ Made with arcane arts & love ~</p> <!-- Added -->
              </footer>
 
         </div> <!-- End Content Wrapper -->
@@ -471,7 +463,6 @@
                  window.scrollTo(0, 0); // Scroll to top
             } else {
                 backToHomeBtn.classList.add('hidden');
-                // Keep scroll enabled for home page too if content exceeds viewport
                 document.body.style.overflowY = 'auto';
             }
             if (viewId === 'predictorPage' && !modelLoaded) {
@@ -515,14 +506,14 @@
                 reader.onload = function(e) {
                     imagePreview.src = e.target.result;
                     imagePreview.style.display = 'block';
-                     showMessage('Image selected.', 'info');
+                     showMessage('Mark received.', 'info'); // Updated
                 }
                 reader.readAsDataURL(file);
             } else {
                 imagePreview.style.display = 'none';
                 imagePreview.src = '#';
-                fileUploadText.textContent = 'Click or drag image';
-                 showMessage('Please select an image file.', 'error');
+                fileUploadText.textContent = "Click hither or bestow image upon this place"; // Updated
+                 showMessage('Pray, select an image file.', 'error'); // Updated
             }
              checkEnableButton();
         }
@@ -539,14 +530,14 @@
 
         // --- TensorFlow.js Logic ---
         async function loadModel() {
-            setLoading(true, 'Loading AI model...');
+            setLoading(true, 'Awakening the Artefact...'); // Updated
             try {
                 model = await tf.loadLayersModel(modelPath);
-                showMessage('Model loaded. Upload an image.', 'success');
+                showMessage('The Scryer awaits. Offer thy mark.', 'success'); // Updated
                 checkEnableButton();
             } catch (error) {
                 console.error("Error loading model:", error);
-                showMessage(`Model load error. Check console.`, 'error');
+                showMessage(`Scryer fails to awaken. Consult the console scrolls.`, 'error'); // Updated
                 model = null;
                 checkEnableButton();
             } finally {
@@ -567,22 +558,22 @@
                                 .expandDims();
                             resolve(tensor);
                         } catch (preprocessError) {
-                            reject(new Error(`Image processing error.`));
+                            reject(new Error(`Image transmutation failed.`)); // Updated
                         }
                     };
-                    img.onerror = (err) => reject(new Error("Image load error."));
+                    img.onerror = (err) => reject(new Error("Image fails to appear.")); // Updated
                     img.src = event.target.result;
                 };
-                reader.onerror = (err) => reject(new Error("File read error."));
+                reader.onerror = (err) => reject(new Error("Scroll read error.")); // Updated
                 reader.readAsDataURL(imgFile);
             });
         }
         async function predict() {
             if (!model || !imageFile) {
-                showMessage('Please select an image.', 'error');
+                showMessage('Pray, offer an image.', 'error'); // Updated
                 return;
             }
-            setLoading(true, 'Analyzing...');
+            setLoading(true, 'Scrying...'); // Updated
             if (resultDiv) resultDiv.innerHTML = '';
             let tensor;
             try {
@@ -590,12 +581,12 @@
                 const predictionTensor = model.predict(tensor);
                 const predictedIndex = tf.argMax(predictionTensor, 1).dataSync()[0];
                 const predictedClass = CLASS_NAMES[predictedIndex];
-                if (resultDiv) resultDiv.innerHTML = `Predicted: <span>${predictedClass}</span>`;
-                showMessage('Analysis complete!', 'success');
+                if (resultDiv) resultDiv.innerHTML = `Essence Divined: <span>${predictedClass}</span>`; // Updated
+                showMessage('The vision is clear!', 'success'); // Updated
                 predictionTensor.dispose();
             } catch (error) {
                 console.error("Prediction error:", error);
-                showMessage(`Analysis failed: ${error.message}`, 'error');
+                showMessage(`Scrying failed: ${error.message}`, 'error'); // Updated
             } finally {
                 if (tensor) tensor.dispose();
                 setLoading(false);
